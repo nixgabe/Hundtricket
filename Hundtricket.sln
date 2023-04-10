@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{4CA381
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4BFC5E94-6AF2-41E6-81D0-1396375ED1B2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{5157036C-2DB2-4B9E-9AFC-11D264AD6CC0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{79A26BF1-29A9-44A2-A1EE-57DB905FF4E4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{420990FF-1686-4887-91F4-75F17FA6AB0F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hundtricket", "Presentation\Hundtricket\Hundtricket.csproj", "{5D43F187-926D-4B07-9882-13586562D052}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{54FFC29C-6A1D-46CC-AE4F-6AA3F59E3057}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Hundtricket\Infrastructure.csproj", "{0AFAAC1E-62C1-4621-9C79-16F777446A50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,22 @@ Global
 		{5D43F187-926D-4B07-9882-13586562D052}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D43F187-926D-4B07-9882-13586562D052}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D43F187-926D-4B07-9882-13586562D052}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54FFC29C-6A1D-46CC-AE4F-6AA3F59E3057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54FFC29C-6A1D-46CC-AE4F-6AA3F59E3057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54FFC29C-6A1D-46CC-AE4F-6AA3F59E3057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54FFC29C-6A1D-46CC-AE4F-6AA3F59E3057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AFAAC1E-62C1-4621-9C79-16F777446A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AFAAC1E-62C1-4621-9C79-16F777446A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AFAAC1E-62C1-4621-9C79-16F777446A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AFAAC1E-62C1-4621-9C79-16F777446A50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5157036C-2DB2-4B9E-9AFC-11D264AD6CC0} = {4BFC5E94-6AF2-41E6-81D0-1396375ED1B2}
-		{79A26BF1-29A9-44A2-A1EE-57DB905FF4E4} = {4BFC5E94-6AF2-41E6-81D0-1396375ED1B2}
 		{5D43F187-926D-4B07-9882-13586562D052} = {420990FF-1686-4887-91F4-75F17FA6AB0F}
+		{54FFC29C-6A1D-46CC-AE4F-6AA3F59E3057} = {4CA381FA-2626-4DCE-AB73-359804622040}
+		{0AFAAC1E-62C1-4621-9C79-16F777446A50} = {4BFC5E94-6AF2-41E6-81D0-1396375ED1B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8DDDA7A8-7005-4369-B17B-ACC159431CB6}

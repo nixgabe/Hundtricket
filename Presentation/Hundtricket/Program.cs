@@ -1,13 +1,23 @@
-using Hundtricket.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Hundtricket.Context;
+using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+
+builder.Services.AddDbContextFactory<HundtricketContext>(options => options.UseSqlServer());
+
+builder.Services.AddScoped<IDogRepository, DogRepository>();
+builder.Services.AddScoped<IDogPicturesRepository, DogPicturesRepository>();
+
+builder.Services.AddDbContext<HundtricketContext>();
+
+
+
+
 
 var app = builder.Build();
 
