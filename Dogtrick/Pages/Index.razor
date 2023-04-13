@@ -1,0 +1,21 @@
+﻿@page "/"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Index</PageTitle>
+
+@if (Dogs == null)
+{
+    <p>Loading...</p>
+}
+
+else
+{
+    @foreach (var dog in Dogs)
+    {
+        <p>@dog.Name is @dog.Age years old. Of breed @dog.Breed</p>
+        @foreach (var picture in dog.Pictures)
+        {
+            <p>@picture</p>
+        }
+    }
+}

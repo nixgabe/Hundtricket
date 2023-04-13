@@ -1,0 +1,11 @@
+﻿@page "/Login"
+
+<h3>Login</h3>
+
+<div>
+    <p>Enter email <InputText @bind-Value="Email"></InputText>
+    </p>
+    <p>Enter Password <InputText @bind-Value="Password"></InputText></p>
+    
+    <button @onclick="() => MemberLogin()">Sign in</button>
+</div>
