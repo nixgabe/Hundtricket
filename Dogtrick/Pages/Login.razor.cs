@@ -39,10 +39,10 @@ namespace Dogtrick.Pages
                 new Claim(ClaimTypes.Role, "Registered", ClaimTypes.Name, Email)
             },
             authenticationType: "True");
+            authState.User.AddIdentity(regClaim);
+
 
             var memberId = member.Id.ToString();
-            
-            authState.User.AddIdentity(regClaim);
             NavigationManager.NavigateTo($"/Home/{memberId}");
         }
     }

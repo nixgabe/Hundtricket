@@ -3,7 +3,6 @@ using Infrastructure.Repository;
 using Infrastructure.Service.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using System.Security.Claims;
 
 namespace Dogtrick.Pages
 {
@@ -12,7 +11,6 @@ namespace Dogtrick.Pages
         public List<DogViewModel> Dogs { get; set; }
 
         public User User { get; set; }
-
         [Inject]
         public IDogRepository _dogRepository { get; set; }
         [Inject]
