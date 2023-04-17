@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Repository;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Dogtrick.Pages
 {
