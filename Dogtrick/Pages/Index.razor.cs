@@ -15,7 +15,6 @@ namespace Dogtrick.Pages
         public IDogRepository _dogRepository { get; set; }
         [Inject]
         public IDogPicturesRepository _dogPicturesRepository { get; set; }
-
         [Inject]
         public IUserRepository _userRepository { get; set; }
 

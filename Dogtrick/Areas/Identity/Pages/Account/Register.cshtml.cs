@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using Entities;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -17,16 +19,44 @@ namespace Dogtrick.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
         private User NewMember { get; set; }
+        private UserProfile NewProfile { get; set; }
+        private UserHobbiesRelationShips NewHobbiesRelationship { get; set; }
+        private UserHobbies HobbiesLikes { get; set; }
+        private UserHobbies HobbiesDislikes { get; set; }
+
+        private UserPreferences NewPreferences { get; set; }
+
+
         public bool ErrorEmailMessage { get; set; } = true;
         public bool ErrorPasswordMessage { get; set; } = true;
+        public bool UserCreated { get; set; } = false;
 
         [Inject]
         public IUserRepository _userRepository { get; set; }
+        [Inject]
+        public IUserHobbiesRepository _userHobbiesRepository { get; set; }
+        [Inject]
+        public IUserHobbiesRelationshipsRepository _userHobbiesRelationshipsRepository { get; set; }
+        [Inject]
+        public IUserPreferencesRepository _userPreferencesRepository { get; set; }
+        [Inject]
+        public IUserProfileRepository _userProfileRepository { get; set; }
+        [Inject]
+        public SignInManager<IdentityUser> SignInManager { get; set; }
+        [Inject]
+        public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
 
-        public RegisterModel(IUserRepository userRepository)
+        public RegisterModel(IUserRepository userRepository, IUserHobbiesRepository userHobbiesRepository, IUserHobbiesRelationshipsRepository userHobbiesRelationshipsRepository, 
+             IUserPreferencesRepository userPreferencesRepository, IUserProfileRepository userProfileRepository, SignInManager<IdentityUser> signInManager, AuthenticationStateProvider authenticationStateProvider)
         {
             _userRepository = userRepository;
+            _userHobbiesRepository = userHobbiesRepository;
+            _userHobbiesRelationshipsRepository = userHobbiesRelationshipsRepository;
+            _userPreferencesRepository = userPreferencesRepository;
+            _userProfileRepository = userProfileRepository;
+            SignInManager = signInManager;
+            AuthenticationStateProvider = authenticationStateProvider;
         }
 
         public class InputModel
@@ -36,15 +66,19 @@ namespace Dogtrick.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
             [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
-
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]            
             public string ConfirmPassword { get; set; }
+            [Required]
+            public string FirstName { get; set; }
+            [Required]
+            public string LastName { get; set; }
+            [Required]
+            public int Age { get; set; }
         }
 
         public async Task OnPostAsync()
@@ -64,9 +98,21 @@ namespace Dogtrick.Areas.Identity.Pages.Account
                 return;
             }
 
+            CreateUserHobbies();
+            CreateUserPreferences();
+            CreateNewProfile();
             NewMember = CreateNewMember();
+            
+            
+            //Hobbies => Preferences => profile => HobbyRelationship
+
+            _userHobbiesRepository.AddMemberHobbies(HobbiesLikes, HobbiesDislikes);
+            _userPreferencesRepository.AddUserPreferences(NewPreferences);
             //_userRepository.RegisterNewMember(NewMember);
-            NewMember = new User();
+            _userHobbiesRelationshipsRepository.AddUserHobbiesRelationship(NewHobbiesRelationship);
+            _userProfileRepository.AddUserProfile(NewProfile);
+            _userRepository.RegisterNewMember(NewMember);
+
             Response.Redirect("/");            
         }
 
@@ -78,9 +124,13 @@ namespace Dogtrick.Areas.Identity.Pages.Account
         private User CreateNewMember()
         {
             User user = new User() { 
-                Id = Guid.NewGuid(), 
+                Id = Guid.NewGuid(),
+                FirstName = Input.FirstName,
+                LastName = Input.LastName,
+                Age = Input.Age,
                 Email = Input.Email,
-                Password = Input.Password
+                Password = Input.Password,
+                UserProfileId = NewProfile.Id
             };
 
             return user;
@@ -94,6 +144,56 @@ namespace Dogtrick.Areas.Identity.Pages.Account
             }
 
             return false;
+        }
+    
+        private void CreateNewProfile()
+        {
+            CreateUserHobbies();
+
+            UserProfile userProfile = new UserProfile()
+            {
+                Id = Guid.NewGuid(),
+                UserHobbiesRelationshipsId = NewHobbiesRelationship.Id,  
+                UserPreferencesId = NewPreferences.Id
+            };
+
+            NewProfile = userProfile;
+        }
+
+        private void CreateUserHobbies()
+        {
+            UserHobbies userLikes = new UserHobbies()
+            {
+                Id = Guid.NewGuid()
+            };
+
+            HobbiesLikes = userLikes;
+
+            UserHobbies userDisikes = new UserHobbies()
+            {
+                Id = Guid.NewGuid()
+            };
+
+            HobbiesDislikes = userDisikes;
+
+            UserHobbiesRelationShips userHobbiesRelationShips = new UserHobbiesRelationShips()
+            {
+                Id = Guid.NewGuid(),
+                LikesId = HobbiesLikes.Id,
+                DislikesId = HobbiesDislikes.Id
+            };
+
+            NewHobbiesRelationship = userHobbiesRelationShips;
+        }
+
+        private void CreateUserPreferences()
+        {
+            UserPreferences userPreferences = new UserPreferences()
+            {
+                Id = Guid.NewGuid()
+            };
+
+            NewPreferences = userPreferences;
         }
     }
 }
