@@ -19,16 +19,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-
-
 builder.Services.AddSingleton<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-//builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-
-//builder.Services.AddScoped<SignInManager<IdentityUser>>();
 
 builder.Services.AddScoped<IDogRepository, DogRepository>();
 builder.Services.AddScoped<IDogPicturesRepository, DogPicturesRepository>();
+builder.Services.AddScoped<IUserHobbiesRepository, UserHobbiesRepository>();
+builder.Services.AddScoped<IUserHobbiesRelationshipsRepository, UserHobbiesRelationships>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+builder.Services.AddScoped<IUserPreferencesRepository, UserPreferencesRepository>();
 
 builder.Services.AddDbContext<HundtricketContext>();
 

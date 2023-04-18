@@ -1,5 +1,4 @@
-﻿using Entities;
-using Infrastructure.Service.ViewModels;
+﻿using Infrastructure.Service.ViewModels;
 
 namespace Infrastructure.Repository
 {

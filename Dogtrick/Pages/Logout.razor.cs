@@ -22,12 +22,7 @@ namespace Dogtrick.Pages
 
             //await SignInManager.SignOutAsync();
 
-
-
-
-
             NavigationManager.NavigateTo("/");
         }
-
     }
 }

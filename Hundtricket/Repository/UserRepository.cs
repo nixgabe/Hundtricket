@@ -30,19 +30,19 @@ namespace Infrastructure.Repository
             context.SaveChanges();
         }
 
-        public void UserIsSignedOn(string email)
-        {
-            var context = _dbContextFactory.CreateDbContext();
-
-            var user = context.Users.Where(f => f.Email == email).FirstOrDefault();
-            user.IsSignedOn = true;
-            context.SaveChanges();
-        }
+        
         public async Task<string> GetMemberEmail(Guid memberId)
         {
             var context = _dbContextFactory.CreateDbContext();
 
             return context.Users.Where(f => f.Id == memberId).Select(f => f.Email).FirstOrDefault();
+        }
+
+        public async Task<User> GetMemberOnId(Guid memberId)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+
+            return context.Users.Where(f => f.Id == memberId).FirstOrDefault();
         }
     }
 }
