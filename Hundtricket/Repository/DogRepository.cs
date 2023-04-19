@@ -1,4 +1,5 @@
-﻿using Hundtricket.Context;
+﻿using Entities;
+using Hundtricket.Context;
 using Infrastructure.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,10 +25,36 @@ namespace Infrastructure.Repository
                     Id = x.DogId,
                     Name = x.Name,
                     Age = x.Age,
-                    Breed = x.DogBreed.Breed,       
+                    Breed = x.DogBreed.Breed,
                     PicturesId = x.DogPicturesRelationshipsId
                 })
-                .ToList();            
+                .ToList();
+        }
+
+        public async Task<AddDogViewModel> FillDogviewModelLists()
+        {
+            var context = _dbContextFactory.CreateDbContext();
+            var list = new AddDogViewModel();
+
+            list.Breeds = context.DogBreeds.Select(x => new DogBreed()
+            {
+                Id = x.Id,
+                Breed = x.Breed
+            }).ToList();
+
+            list.EnergyLevels = context.DogEnergyLevels.Select(x => new DogEnergyLevel()
+            {
+                Id = x.Id,
+                EnergyLevel = x.EnergyLevel,
+            }).ToList();
+
+            list.Sizes = context.DogSizes.Select(x => new DogSize()
+            {
+                Id = x.Id,
+                Size = x.Size
+            }).ToList();
+
+            return list;
         }
     }
 }

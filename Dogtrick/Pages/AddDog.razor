@@ -1,5 +1,57 @@
-﻿<h3>AddDog</h3>
+﻿@page "/AddDog/{memberId}"
+@attribute [Authorize(Roles = "Registered")]
 
-@code {
+<h3>AddDog</h3>
 
+@if(AddDogViewModel == null)
+{
+    <p>Loading...</p>
+}
+
+else
+{
+    <p>Name</p>
+    <InputText @bind-Value="NewDog.Name"></InputText>
+    <p>Age</p>
+    <InputNumber @bind-Value="NewDog.Age"></InputNumber>
+    <p>Gender</p>
+    <InputText @bind-Value="NewDog.Gender"></InputText>
+    <p>Breed</p>
+    <select @bind="@NewDog.DogBreedId">
+        @foreach(var breed in AddDogViewModel.Breeds)
+        {
+            <option value="@breed.Id">@breed.Breed</option>
+        }
+    </select>
+    <p>Size</p>
+        <select @bind="@NewDog.DogSizeId">
+        @foreach (var size in AddDogViewModel.Sizes)
+        {
+                <option value="@size.Id">@size.Size</option>
+        }
+        </select>
+    <p>Energy level</p>
+    <select @bind="@NewDog.DogEnergyLevelId">
+        @foreach (var level in AddDogViewModel.EnergyLevels)
+        {
+            <option value="@level.Id">@level.EnergyLevel</option>
+        }
+    </select>
+    <p>Allergenic</p>
+    <InputCheckbox @bind-Value="NewDog.Allergenic"></InputCheckbox>
+
+    <h3>Dog Personality</h3>
+    <p>Works with boys <InputCheckbox @bind-value="Personality.WorksWithBoys"></InputCheckbox></p>
+    <p>Works with girls <InputCheckbox @bind-value="Personality.WorksWithGirls"></InputCheckbox></p>
+    @*<p>Average walk <InputNumber @bind-value="Personality.AverageWalk"></InputNumber></p>*@
+    <p>Timid <InputCheckbox @bind-value="Personality.Timid"></InputCheckbox></p>
+    <p>Confident <InputCheckbox @bind-value="Personality.Confident"></InputCheckbox></p>
+    <p>Adaptable <InputCheckbox @bind-value="Personality.Adaptable"></InputCheckbox></p>
+    <p>Independent <InputCheckbox @bind-value="Personality.Independent"></InputCheckbox></p>
+    <p>Laidback <InputCheckbox @bind-value="Personality.LaidBack"></InputCheckbox></p>
+
+
+    <h3>Dog Preferences</h3>
+
+    <button @onclick="()=> SaveDog()">Save dog</button>
 }

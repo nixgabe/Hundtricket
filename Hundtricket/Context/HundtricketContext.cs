@@ -47,16 +47,23 @@ namespace Hundtricket.Context
 
             modelBuilder.Entity<Dog>()
                 .HasData(
-                new Dog { DogId = EddieId, Name = "Eddie", Age = 1, DogBreedId = EddieBreed, DogPicturesRelationshipsId = EddiesPicsId, 
+                new Dog { DogId = EddieId, Name = "Eddie", Age = 1, Gender = "Male",  DogBreedId = EddieBreed, DogPicturesRelationshipsId = EddiesPicsId, 
                     DogFiltersRelationshipsId = EddiesFilters, DogSizeId = 3, DogEnergyLevelId = 2
                 },
-                new Dog { DogId = ThorId, Name = "Thor", Age = 11, DogBreedId = ThorBreed, DogPicturesRelationshipsId = ThorsPicsId, 
+                new Dog { DogId = ThorId, Name = "Thor", Age = 11, Gender = "Male", DogBreedId = ThorBreed, DogPicturesRelationshipsId = ThorsPicsId, 
                     DogFiltersRelationshipsId = ThorsFilters, DogSizeId = 4, DogEnergyLevelId = 1
                 });
 
             modelBuilder.Entity<DogBreed>().HasData(
                 new DogBreed { Id = EddieBreed, Breed = "Mixed" },
-                new DogBreed { Id = ThorBreed, Breed = "Samoyed" }
+                new DogBreed { Id = ThorBreed, Breed = "Samoyed" },
+                new DogBreed { Id = 3, Breed = "Golden Retriever" },
+                new DogBreed { Id = 4, Breed = "German Shepherd" },
+                new DogBreed { Id = 5, Breed = "Borzoi" },
+                new DogBreed { Id = 6, Breed = "Yorkshire Terrier" },
+                new DogBreed { Id = 7, Breed = "Beagle" },
+                new DogBreed { Id = 8, Breed = "Great Dane" },
+                new DogBreed { Id = 9, Breed = "Siberian Husky" }
                 );
 
             modelBuilder.Entity<DogSize>().HasData(
@@ -94,10 +101,10 @@ namespace Hundtricket.Context
 
             modelBuilder.Entity<DogFilters>()
                 .HasData(
-                new DogFilters { Id = EddiesPersonality, EnergyLevel = "Medium" },
-                new DogFilters { Id = EddiesPreferences, EnergyLevel = "Medium2" },
-                new DogFilters { Id = ThorsPersonality, EnergyLevel = "Low" },
-                new DogFilters { Id = ThorsPreferences, EnergyLevel = "Low2" }
+                new DogFilters { Id = EddiesPersonality },
+                new DogFilters { Id = EddiesPreferences },
+                new DogFilters { Id = ThorsPersonality },
+                new DogFilters { Id = ThorsPreferences }
                 );
 
             modelBuilder.Entity<DogFiltersRelationships>()
@@ -152,6 +159,8 @@ namespace Hundtricket.Context
         public DbSet<DogPictures> DogPictures { get; set; }
         public DbSet<DogFiltersRelationships> DogFiltersRelationships { get; set; }
         public DbSet<DogFilters> DogFilters { get; set; }
+        public DbSet<DogSize> DogSizes { get; set; }
+        public DbSet<DogEnergyLevel> DogEnergyLevels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserDogRelationships> UserDogRelationships { get; set; }
         public DbSet<UserHobbies> UserHobbies { get; set; }
