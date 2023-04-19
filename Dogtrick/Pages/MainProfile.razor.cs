@@ -28,5 +28,10 @@ namespace Dogtrick.Pages
         {
             _navigationManager.NavigateTo($"/EditProfile/{MemberId}");
         }
+
+        public void AddDog()
+        {
+            _navigationManager.NavigateTo($"/AddDog/{MemberId}");
+        }
     }
 }
