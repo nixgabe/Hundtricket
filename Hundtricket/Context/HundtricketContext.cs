@@ -105,9 +105,7 @@ namespace Hundtricket.Context
 
             Guid GabesId = Guid.NewGuid();
             Guid GabesProfileId = Guid.NewGuid();
-            Guid GabesHobbiesRelationshipsId = Guid.NewGuid();
-            Guid GabesLikesId = Guid.NewGuid();
-            Guid GabesDislikesId = Guid.NewGuid();
+            Guid GabesHobbyId = Guid.NewGuid();
             Guid GabesPreferenceId = Guid.NewGuid();
             Guid GabesOwnerId = Guid.NewGuid();
             
@@ -137,22 +135,15 @@ namespace Hundtricket.Context
 
             modelBuilder.Entity<UserHobbies>()
                 .HasData(
-                new UserHobbies { Id = GabesLikesId, Gaming = true, Movies = true, Swimming = true },
-                new UserHobbies { Id = GabesDislikesId, Gymming = true }
+                new UserHobbies { Id = GabesHobbyId, Gaming = true, Movies = true, Swimming = true }
                 );
-
-            modelBuilder.Entity<UserHobbiesRelationShips>()
-                .HasData(
-                new UserHobbiesRelationShips { Id = GabesHobbiesRelationshipsId, LikesId = GabesLikesId, DislikesId = GabesDislikesId }
-                );
-
-            modelBuilder.Entity<UserHobbiesRelationShips>()
-                .HasMany(f => f.UserHobbies);
 
             modelBuilder.Entity<UserProfile>()
                 .HasData(
                 new UserProfile { Id = GabesProfileId, About = "Test Content", Gender = "Male", Job = "Student", Location = "Bullaren", Sexuality = "Bisexual",
-                    UserHobbiesRelationshipsId = GabesHobbiesRelationshipsId, UserPreferencesId = GabesPreferenceId});
+                    UserHobbiesId = GabesHobbyId, UserPreferencesId = GabesPreferenceId});
+
+            
         }
 
         public DbSet<Dog> Dogs { get; set; }
@@ -164,7 +155,6 @@ namespace Hundtricket.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserDogRelationships> UserDogRelationships { get; set; }
         public DbSet<UserHobbies> UserHobbies { get; set; }
-        public DbSet<UserHobbiesRelationShips> UserHobbiesRelationShips { get; set; }
         public DbSet<UserPreferences> UserPreferences { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
     }

@@ -8,10 +8,10 @@
         public string? Sexuality { get; set; }
         public string? Gender { get; set; }
         public string? Location { get; set; }
-        public Guid UserHobbiesRelationshipsId { get; set; }
+        public Guid UserHobbiesId { get; set; }
         public Guid UserPreferencesId { get; set; }
 
-        public virtual UserHobbiesRelationShips UserHobbiesRelationShips { get; set; }
+        public virtual UserHobbies UserHobbies { get; set; }
         public virtual UserPreferences UserPreferences { get; set; }
     }
 }

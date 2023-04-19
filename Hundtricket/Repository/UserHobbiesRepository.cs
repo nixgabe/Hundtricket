@@ -13,13 +13,13 @@ namespace Infrastructure.Repository
             _dbContextFactory = dbContextFactory;
         }
 
-        public void AddMemberHobbies(UserHobbies userLikes, UserHobbies userDislikes)
+        public void AddMemberHobbies(UserHobbies userLikes)
         {
             var context = _dbContextFactory.CreateDbContext();
 
-            context.UserHobbies.Add(userLikes);
-            context.UserHobbies.Add(userDislikes);
+            context.UserHobbies.Add(userLikes);            
             context.SaveChanges();
         }
+        
     }
 }

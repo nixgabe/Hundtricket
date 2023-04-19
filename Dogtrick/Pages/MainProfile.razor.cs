@@ -8,6 +8,8 @@ namespace Dogtrick.Pages
     {
         [Inject]
         public IUserRepository _userRepository { get; set; }
+        [Inject]
+        public NavigationManager _navigationManager { get; set; }
 
         [Parameter]
         public string MemberId { get; set; }
@@ -20,6 +22,11 @@ namespace Dogtrick.Pages
         {
             ParsedMemberId = Guid.Parse(MemberId);
             User = await _userRepository.GetMemberOnId(ParsedMemberId);
+        }
+
+        public void EditProfile()
+        {
+            _navigationManager.NavigateTo($"/EditProfile/{MemberId}");
         }
     }
 }

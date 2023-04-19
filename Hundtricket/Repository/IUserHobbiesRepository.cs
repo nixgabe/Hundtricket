@@ -4,6 +4,6 @@ namespace Infrastructure.Repository
 {
     public interface IUserHobbiesRepository
     {
-        public void AddMemberHobbies(UserHobbies userLikes, UserHobbies userDislikes);
+        public void AddMemberHobbies(UserHobbies userLikes);
     }
 }
