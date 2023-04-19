@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class addmigrationInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -89,16 +90,21 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserHobbiesRelationShips",
+                name: "UserHobbies",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LikesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DislikesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Nature = table.Column<bool>(type: "bit", nullable: false),
+                    Hiking = table.Column<bool>(type: "bit", nullable: false),
+                    Swimming = table.Column<bool>(type: "bit", nullable: false),
+                    Music = table.Column<bool>(type: "bit", nullable: false),
+                    Gaming = table.Column<bool>(type: "bit", nullable: false),
+                    Movies = table.Column<bool>(type: "bit", nullable: false),
+                    Gymming = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserHobbiesRelationShips", x => x.Id);
+                    table.PrimaryKey("PK_UserHobbies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,10 +112,10 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LocationRange = table.Column<int>(type: "int", nullable: false),
-                    YoungestAge = table.Column<int>(type: "int", nullable: false),
-                    OldestAge = table.Column<int>(type: "int", nullable: false)
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocationRange = table.Column<int>(type: "int", nullable: true),
+                    YoungestAge = table.Column<int>(type: "int", nullable: true),
+                    OldestAge = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -231,49 +237,25 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserHobbies",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nature = table.Column<bool>(type: "bit", nullable: false),
-                    Hiking = table.Column<bool>(type: "bit", nullable: false),
-                    Swimming = table.Column<bool>(type: "bit", nullable: false),
-                    Music = table.Column<bool>(type: "bit", nullable: false),
-                    Gaming = table.Column<bool>(type: "bit", nullable: false),
-                    Movies = table.Column<bool>(type: "bit", nullable: false),
-                    Gymming = table.Column<bool>(type: "bit", nullable: false),
-                    UserHobbiesRelationShipsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserHobbies", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserHobbies_UserHobbiesRelationShips_UserHobbiesRelationShipsId",
-                        column: x => x.UserHobbiesRelationShipsId,
-                        principalTable: "UserHobbiesRelationShips",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserProfiles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    About = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Job = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sexuality = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserHobbiesRelationshipsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    About = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Job = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sexuality = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserHobbiesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserPreferencesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserProfiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserProfiles_UserHobbiesRelationShips_UserHobbiesRelationshipsId",
-                        column: x => x.UserHobbiesRelationshipsId,
-                        principalTable: "UserHobbiesRelationShips",
+                        name: "FK_UserProfiles_UserHobbies_UserHobbiesId",
+                        column: x => x.UserHobbiesId,
+                        principalTable: "UserHobbies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -289,13 +271,14 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Age = table.Column<int>(type: "int", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserDogRelationshipsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserDogRelationshipsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsSignedOn = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -304,14 +287,12 @@ namespace Infrastructure.Migrations
                         name: "FK_Users_UserDogRelationships_UserDogRelationshipsId",
                         column: x => x.UserDogRelationshipsId,
                         principalTable: "UserDogRelationships",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Users_UserProfiles_UserProfileId",
                         column: x => x.UserProfileId,
                         principalTable: "UserProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -338,10 +319,10 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Adaptable", "AverageWalk", "Confident", "DogFiltersRelationshipsId", "EnergyLevel", "Independent", "LaidBack", "Timid", "WorksWithBoys", "WorksWithGirls" },
                 values: new object[,]
                 {
-                    { new Guid("0f3a3690-9e28-46f7-af88-ce63a16986ec"), false, 0m, false, null, "Low2", false, false, false, false, false },
-                    { new Guid("4d86f4ab-da1d-4e5d-958a-93d620ff12b5"), false, 0m, false, null, "Medium2", false, false, false, false, false },
-                    { new Guid("6d37cc29-2c57-45df-894c-0e71b0224d12"), false, 0m, false, null, "Low", false, false, false, false, false },
-                    { new Guid("74b11255-c5b3-41b3-991c-c227bcb65523"), false, 0m, false, null, "Medium", false, false, false, false, false }
+                    { new Guid("1bd4aa58-743b-4bd9-93fc-2f32c1a58b04"), false, 0m, false, null, "Medium", false, false, false, false, false },
+                    { new Guid("6e5e06cf-a0f8-4419-acc5-bfed17cec6d4"), false, 0m, false, null, "Low", false, false, false, false, false },
+                    { new Guid("a45bba47-f35a-4882-8bf8-5116577a3d25"), false, 0m, false, null, "Medium2", false, false, false, false, false },
+                    { new Guid("b40b2931-1df4-43f1-a7d2-6edfacab66c3"), false, 0m, false, null, "Low2", false, false, false, false, false }
                 });
 
             migrationBuilder.InsertData(
@@ -349,8 +330,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "DogPersonality", "DogPreferences" },
                 values: new object[,]
                 {
-                    { new Guid("ae4e1834-f846-4a21-b8aa-9cb8c3100c34"), new Guid("74b11255-c5b3-41b3-991c-c227bcb65523"), new Guid("4d86f4ab-da1d-4e5d-958a-93d620ff12b5") },
-                    { new Guid("ea6e5e26-2272-436e-a2d6-13a47efbd70e"), new Guid("6d37cc29-2c57-45df-894c-0e71b0224d12"), new Guid("0f3a3690-9e28-46f7-af88-ce63a16986ec") }
+                    { new Guid("796edc83-b48c-4645-8d4d-67da19b10c08"), new Guid("6e5e06cf-a0f8-4419-acc5-bfed17cec6d4"), new Guid("b40b2931-1df4-43f1-a7d2-6edfacab66c3") },
+                    { new Guid("d7f78adb-1339-4f98-8447-aa75b4e1bf81"), new Guid("1bd4aa58-743b-4bd9-93fc-2f32c1a58b04"), new Guid("a45bba47-f35a-4882-8bf8-5116577a3d25") }
                 });
 
             migrationBuilder.InsertData(
@@ -358,9 +339,9 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "DogPicturesId", "DogPicturesRelationshipsId", "Photo" },
                 values: new object[,]
                 {
-                    { new Guid("14fd0136-6ddf-4168-8a06-0fe6b45c4ad0"), new Guid("8a0e4ab6-2905-446d-a1f6-25c34a49e7ad"), null, "Thors second profile Picture" },
-                    { new Guid("76c324d6-224c-41ab-ad5f-acf07c727a6c"), new Guid("2700a7a4-c59a-43e9-b908-79f7648509a4"), null, "Eddies only profile Picture" },
-                    { new Guid("95145914-ba83-4ebf-b5ba-8ccb041c7e69"), new Guid("8a0e4ab6-2905-446d-a1f6-25c34a49e7ad"), null, "Thors first profile Picture" }
+                    { new Guid("5a6fe1f0-4f81-4ac4-9fd1-eefaf293095c"), new Guid("70f1fb91-5889-46d8-b0f0-e63645fb753b"), null, "Thors second profile Picture" },
+                    { new Guid("993c93ba-8db5-4048-b87a-a4b88d0418b7"), new Guid("70f1fb91-5889-46d8-b0f0-e63645fb753b"), null, "Thors first profile Picture" },
+                    { new Guid("a7d2fe65-f2d3-4ea5-8a24-ba606fe99b7e"), new Guid("9e3e90e0-5a5a-48e9-8386-960c6ca95b9d"), null, "Eddies only profile Picture" }
                 });
 
             migrationBuilder.InsertData(
@@ -368,8 +349,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "DogPicturesId" },
                 values: new object[,]
                 {
-                    { new Guid("51515a17-24ae-49af-bf57-609d5ad69349"), new Guid("8a0e4ab6-2905-446d-a1f6-25c34a49e7ad") },
-                    { new Guid("c9f255e4-3a7b-42de-9dfb-4e5822a8716a"), new Guid("2700a7a4-c59a-43e9-b908-79f7648509a4") }
+                    { new Guid("eacf642f-ff75-4eec-a437-3424765cf160"), new Guid("70f1fb91-5889-46d8-b0f0-e63645fb753b") },
+                    { new Guid("fdd4c483-e7dd-4b2e-8912-3ccebfc8e32d"), new Guid("9e3e90e0-5a5a-48e9-8386-960c6ca95b9d") }
                 });
 
             migrationBuilder.InsertData(
@@ -387,54 +368,45 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "UserDogRelationships",
                 columns: new[] { "Id", "UsersDogId" },
-                values: new object[] { new Guid("dd5e5ac0-b782-4925-8314-50b9d3ddcae3"), new Guid("659fa371-154e-470c-a927-6fdae716bebf") });
+                values: new object[] { new Guid("838b776d-85de-456f-ae13-d7e3e6d544e4"), new Guid("1ea1ee74-cc56-478a-a8dc-c46cf7d722f7") });
 
             migrationBuilder.InsertData(
                 table: "UserDogs",
                 columns: new[] { "Id", "DogId", "UserDogRelationshipsId", "UsersDogId" },
                 values: new object[,]
                 {
-                    { new Guid("6ebf9138-3792-45d6-9520-24314d596ecd"), new Guid("c997349a-a56e-4027-8e8f-d509d1601ea5"), null, new Guid("659fa371-154e-470c-a927-6fdae716bebf") },
-                    { new Guid("c9b8c472-b5bd-4466-a582-0ab6430254f2"), new Guid("f4a1567e-5600-44a7-b6b8-b8804c92f191"), null, new Guid("659fa371-154e-470c-a927-6fdae716bebf") }
+                    { new Guid("0b19492f-27cf-433c-8abd-9add7dbf1ef8"), new Guid("2ddea553-f3d6-4a4b-89e7-f40fb15e8352"), null, new Guid("1ea1ee74-cc56-478a-a8dc-c46cf7d722f7") },
+                    { new Guid("93022f06-02eb-4008-bb22-17010ac0e1aa"), new Guid("d15605cb-e81f-4a26-88ba-1ee1d525f719"), null, new Guid("1ea1ee74-cc56-478a-a8dc-c46cf7d722f7") }
                 });
 
             migrationBuilder.InsertData(
                 table: "UserHobbies",
-                columns: new[] { "Id", "Gaming", "Gymming", "Hiking", "Movies", "Music", "Nature", "Swimming", "UserHobbiesRelationShipsId" },
-                values: new object[,]
-                {
-                    { new Guid("0736a20b-a6f6-48de-a21b-415181c9751f"), false, true, false, false, false, false, false, null },
-                    { new Guid("18ae64cb-2303-4b5d-aa9a-b88e95a0e6fa"), true, false, false, true, false, false, true, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "UserHobbiesRelationShips",
-                columns: new[] { "Id", "DislikesId", "LikesId" },
-                values: new object[] { new Guid("6d14e72d-66f5-4b16-83f3-e850adbcb142"), new Guid("0736a20b-a6f6-48de-a21b-415181c9751f"), new Guid("18ae64cb-2303-4b5d-aa9a-b88e95a0e6fa") });
+                columns: new[] { "Id", "Gaming", "Gymming", "Hiking", "Movies", "Music", "Nature", "Swimming" },
+                values: new object[] { new Guid("04123a5b-5b7a-49f4-b8c3-76029bfdf687"), true, false, false, true, false, false, true });
 
             migrationBuilder.InsertData(
                 table: "UserPreferences",
                 columns: new[] { "Id", "Gender", "LocationRange", "OldestAge", "YoungestAge" },
-                values: new object[] { new Guid("21265a9c-7711-4623-a728-ba38abbabe99"), "All", 60, 40, 25 });
+                values: new object[] { new Guid("1c940708-a8b0-47c7-b8e1-ad6ee60b0ceb"), "All", 60, 40, 25 });
 
             migrationBuilder.InsertData(
                 table: "Dogs",
                 columns: new[] { "DogId", "About", "Age", "Allergenic", "DogBreedId", "DogEnergyLevelId", "DogFiltersRelationshipsId", "DogPicturesRelationshipsId", "DogSizeId", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("c997349a-a56e-4027-8e8f-d509d1601ea5"), null, 1, false, 1, 2, new Guid("ae4e1834-f846-4a21-b8aa-9cb8c3100c34"), new Guid("c9f255e4-3a7b-42de-9dfb-4e5822a8716a"), 3, "Eddie" },
-                    { new Guid("f4a1567e-5600-44a7-b6b8-b8804c92f191"), null, 11, false, 2, 1, new Guid("ea6e5e26-2272-436e-a2d6-13a47efbd70e"), new Guid("51515a17-24ae-49af-bf57-609d5ad69349"), 4, "Thor" }
+                    { new Guid("2ddea553-f3d6-4a4b-89e7-f40fb15e8352"), null, 1, false, 1, 2, new Guid("d7f78adb-1339-4f98-8447-aa75b4e1bf81"), new Guid("fdd4c483-e7dd-4b2e-8912-3ccebfc8e32d"), 3, "Eddie" },
+                    { new Guid("d15605cb-e81f-4a26-88ba-1ee1d525f719"), null, 11, false, 2, 1, new Guid("796edc83-b48c-4645-8d4d-67da19b10c08"), new Guid("eacf642f-ff75-4eec-a437-3424765cf160"), 4, "Thor" }
                 });
 
             migrationBuilder.InsertData(
                 table: "UserProfiles",
-                columns: new[] { "Id", "About", "Gender", "Job", "Location", "Sexuality", "UserHobbiesRelationshipsId", "UserPreferencesId" },
-                values: new object[] { new Guid("d517f437-12b6-4383-8977-87eba4d6ba8d"), "Test Content", "Male", "Student", "Bullaren", "Bisexual", new Guid("6d14e72d-66f5-4b16-83f3-e850adbcb142"), new Guid("21265a9c-7711-4623-a728-ba38abbabe99") });
+                columns: new[] { "Id", "About", "Gender", "Job", "Location", "Sexuality", "UserHobbiesId", "UserPreferencesId" },
+                values: new object[] { new Guid("934a5e3f-20fa-4efb-988b-cd7cfc4bb95c"), "Test Content", "Male", "Student", "Bullaren", "Bisexual", new Guid("04123a5b-5b7a-49f4-b8c3-76029bfdf687"), new Guid("1c940708-a8b0-47c7-b8e1-ad6ee60b0ceb") });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Age", "Email", "FirstName", "LastName", "Password", "UserDogRelationshipsId", "UserProfileId" },
-                values: new object[] { new Guid("30e5ce5c-21dd-4861-a5f7-91b4afdfd802"), 30, "Nixgabriel92@gmail.com", "Gabriel", "Nix", "Blank", new Guid("dd5e5ac0-b782-4925-8314-50b9d3ddcae3"), new Guid("d517f437-12b6-4383-8977-87eba4d6ba8d") });
+                columns: new[] { "Id", "Age", "Email", "FirstName", "IsSignedOn", "LastName", "Password", "UserDogRelationshipsId", "UserProfileId" },
+                values: new object[] { new Guid("8293e866-0b02-4527-b121-330ff28f2cca"), 30, "Nixgabriel92@gmail.com", "Gabriel", false, "Nix", "Blank", new Guid("838b776d-85de-456f-ae13-d7e3e6d544e4"), new Guid("934a5e3f-20fa-4efb-988b-cd7cfc4bb95c") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DogFilters_DogFiltersRelationshipsId",
@@ -477,14 +449,9 @@ namespace Infrastructure.Migrations
                 column: "UserDogRelationshipsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserHobbies_UserHobbiesRelationShipsId",
-                table: "UserHobbies",
-                column: "UserHobbiesRelationShipsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProfiles_UserHobbiesRelationshipsId",
+                name: "IX_UserProfiles_UserHobbiesId",
                 table: "UserProfiles",
-                column: "UserHobbiesRelationshipsId");
+                column: "UserHobbiesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_UserPreferencesId",
@@ -518,9 +485,6 @@ namespace Infrastructure.Migrations
                 name: "UserDogs");
 
             migrationBuilder.DropTable(
-                name: "UserHobbies");
-
-            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
@@ -545,7 +509,7 @@ namespace Infrastructure.Migrations
                 name: "UserProfiles");
 
             migrationBuilder.DropTable(
-                name: "UserHobbiesRelationShips");
+                name: "UserHobbies");
 
             migrationBuilder.DropTable(
                 name: "UserPreferences");

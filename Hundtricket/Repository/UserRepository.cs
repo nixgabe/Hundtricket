@@ -44,5 +44,18 @@ namespace Infrastructure.Repository
 
             return context.Users.Where(f => f.Id == memberId).FirstOrDefault();
         }
+
+        public void UpdateUser(User member)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+
+            var original = context.Users.Where(f => f.Id == member.Id).FirstOrDefault();
+
+            original.FirstName = member.FirstName;
+            original.LastName = member.LastName;
+            original.Email = member.Email;
+
+            context.SaveChanges();
+        }
     }
 }

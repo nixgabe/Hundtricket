@@ -20,10 +20,8 @@ namespace Dogtrick.Areas.Identity.Pages.Account
         public InputModel Input { get; set; }
         private User NewMember { get; set; }
         private UserProfile NewProfile { get; set; }
-        private UserHobbiesRelationShips NewHobbiesRelationship { get; set; }
         private UserHobbies HobbiesLikes { get; set; }
-        private UserHobbies HobbiesDislikes { get; set; }
-
+        
         private UserPreferences NewPreferences { get; set; }
 
 
@@ -36,8 +34,6 @@ namespace Dogtrick.Areas.Identity.Pages.Account
         [Inject]
         public IUserHobbiesRepository _userHobbiesRepository { get; set; }
         [Inject]
-        public IUserHobbiesRelationshipsRepository _userHobbiesRelationshipsRepository { get; set; }
-        [Inject]
         public IUserPreferencesRepository _userPreferencesRepository { get; set; }
         [Inject]
         public IUserProfileRepository _userProfileRepository { get; set; }
@@ -47,12 +43,11 @@ namespace Dogtrick.Areas.Identity.Pages.Account
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
 
-        public RegisterModel(IUserRepository userRepository, IUserHobbiesRepository userHobbiesRepository, IUserHobbiesRelationshipsRepository userHobbiesRelationshipsRepository, 
+        public RegisterModel(IUserRepository userRepository, IUserHobbiesRepository userHobbiesRepository, 
              IUserPreferencesRepository userPreferencesRepository, IUserProfileRepository userProfileRepository, SignInManager<IdentityUser> signInManager, AuthenticationStateProvider authenticationStateProvider)
         {
             _userRepository = userRepository;
-            _userHobbiesRepository = userHobbiesRepository;
-            _userHobbiesRelationshipsRepository = userHobbiesRelationshipsRepository;
+            _userHobbiesRepository = userHobbiesRepository;            
             _userPreferencesRepository = userPreferencesRepository;
             _userProfileRepository = userProfileRepository;
             SignInManager = signInManager;
@@ -103,15 +98,10 @@ namespace Dogtrick.Areas.Identity.Pages.Account
             CreateNewProfile();
             NewMember = CreateNewMember();
             
-            
-            //Hobbies => Preferences => profile => HobbyRelationship
-
-            _userHobbiesRepository.AddMemberHobbies(HobbiesLikes, HobbiesDislikes);
-            _userPreferencesRepository.AddUserPreferences(NewPreferences);
+            //_userHobbiesRepository.AddMemberHobbies(HobbiesLikes);
+            //_userPreferencesRepository.AddUserPreferences(NewPreferences);
+            //_userProfileRepository.AddUserProfile(NewProfile);
             //_userRepository.RegisterNewMember(NewMember);
-            _userHobbiesRelationshipsRepository.AddUserHobbiesRelationship(NewHobbiesRelationship);
-            _userProfileRepository.AddUserProfile(NewProfile);
-            _userRepository.RegisterNewMember(NewMember);
 
             Response.Redirect("/");            
         }
@@ -153,7 +143,7 @@ namespace Dogtrick.Areas.Identity.Pages.Account
             UserProfile userProfile = new UserProfile()
             {
                 Id = Guid.NewGuid(),
-                UserHobbiesRelationshipsId = NewHobbiesRelationship.Id,  
+                UserHobbiesId = HobbiesLikes.Id,  
                 UserPreferencesId = NewPreferences.Id
             };
 
@@ -167,23 +157,7 @@ namespace Dogtrick.Areas.Identity.Pages.Account
                 Id = Guid.NewGuid()
             };
 
-            HobbiesLikes = userLikes;
-
-            UserHobbies userDisikes = new UserHobbies()
-            {
-                Id = Guid.NewGuid()
-            };
-
-            HobbiesDislikes = userDisikes;
-
-            UserHobbiesRelationShips userHobbiesRelationShips = new UserHobbiesRelationShips()
-            {
-                Id = Guid.NewGuid(),
-                LikesId = HobbiesLikes.Id,
-                DislikesId = HobbiesDislikes.Id
-            };
-
-            NewHobbiesRelationship = userHobbiesRelationShips;
+            HobbiesLikes = userLikes;           
         }
 
         private void CreateUserPreferences()
