@@ -18,4 +18,12 @@ else
         <p>Email = @User.Email</p>
         <p>Age = @User.Age</p>
     </div>
+
+    <div>
+        @foreach (var dog in Dogs)
+        {
+            <p>@dog.Name is @dog.Age years old. Of breed @dog.Breed</p>
+
+        }
+    </div>
 }
