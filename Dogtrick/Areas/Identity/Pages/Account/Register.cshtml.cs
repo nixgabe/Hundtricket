@@ -97,11 +97,11 @@ namespace Dogtrick.Areas.Identity.Pages.Account
             CreateUserPreferences();
             CreateNewProfile();
             NewMember = CreateNewMember();
-            
-            //_userHobbiesRepository.AddMemberHobbies(HobbiesLikes);
-            //_userPreferencesRepository.AddUserPreferences(NewPreferences);
-            //_userProfileRepository.AddUserProfile(NewProfile);
-            //_userRepository.RegisterNewMember(NewMember);
+
+            _userHobbiesRepository.AddMemberHobbies(HobbiesLikes);
+            _userPreferencesRepository.AddUserPreferences(NewPreferences);
+            _userProfileRepository.AddUserProfile(NewProfile);
+            _userRepository.RegisterNewMember(NewMember);
 
             Response.Redirect("/");            
         }

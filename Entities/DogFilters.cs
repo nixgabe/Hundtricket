@@ -5,7 +5,6 @@
         public Guid Id { get; set; }
         public bool WorksWithBoys { get; set; }
         public bool WorksWithGirls { get; set; }
-        public string EnergyLevel { get; set; }
         public decimal AverageWalk { get; set; } = 0;
         public bool Timid { get; set; }
         public bool Confident { get; set; }
