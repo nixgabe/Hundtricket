@@ -70,5 +70,38 @@ namespace Infrastructure.Repository
             context.Dogs.Add(newDog);
             context.SaveChanges();
         }
+
+        public async Task<List<DogViewModel>> GetMemberDogsOnId(Guid MemberId)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+
+            var dogList = context.UserDogs
+                .Where(f => f.UsersDogId == MemberId)
+                .Select(s => s.DogId)
+                .ToList();
+
+            List<DogViewModel> modelList = new List<DogViewModel>();
+
+            //Can probably be done in one line in linq
+            foreach (var id in dogList)
+            {
+                var dog = context.Dogs
+                    .Include(f => f.DogBreed)
+                    .Where(f => f.DogId == id)
+                    .Select(x => new DogViewModel()
+                    {
+                        Id = x.DogId,
+                        Name = x.Name,
+                        Age = x.Age,
+                        Breed = x.DogBreed.Breed,
+                        PicturesId = x.DogPicturesRelationshipsId
+                    })
+                    .FirstOrDefault();
+
+                modelList.Add(dog);
+            }
+
+            return modelList;
+        }
     }
 }
