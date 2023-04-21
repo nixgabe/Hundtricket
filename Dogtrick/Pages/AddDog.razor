@@ -37,21 +37,28 @@ else
             <option value="@level.Id">@level.EnergyLevel</option>
         }
     </select>
-    <p>Allergenic</p>
-    <InputCheckbox @bind-Value="NewDog.Allergenic"></InputCheckbox>
+    <p>Check if Allergenic <InputCheckbox @bind-Value="NewDog.Allergenic"></InputCheckbox> </p>
 
     <h3>Dog Personality</h3>
-    <p>Works with boys <InputCheckbox @bind-value="Personality.WorksWithBoys"></InputCheckbox></p>
-    <p>Works with girls <InputCheckbox @bind-value="Personality.WorksWithGirls"></InputCheckbox></p>
-    @*<p>Average walk <InputNumber @bind-value="Personality.AverageWalk"></InputNumber></p>*@
-    <p>Timid <InputCheckbox @bind-value="Personality.Timid"></InputCheckbox></p>
-    <p>Confident <InputCheckbox @bind-value="Personality.Confident"></InputCheckbox></p>
-    <p>Adaptable <InputCheckbox @bind-value="Personality.Adaptable"></InputCheckbox></p>
-    <p>Independent <InputCheckbox @bind-value="Personality.Independent"></InputCheckbox></p>
-    <p>Laidback <InputCheckbox @bind-value="Personality.LaidBack"></InputCheckbox></p>
+    <p>Works with boys = <InputCheckbox @bind-Value="Personality.WorksWithBoys"></InputCheckbox></p>
+    <p>Works with girls = <InputCheckbox @bind-Value="Personality.WorksWithGirls"></InputCheckbox></p>
+    <p>Average walk <InputNumber @bind-Value="Personality.AverageWalk"></InputNumber></p>
+    <p>Timid = <InputCheckbox @bind-Value="Personality.Timid"></InputCheckbox></p>
+    <p>Confident = <InputCheckbox @bind-Value="Personality.Confident"></InputCheckbox></p>
+    <p>Adaptable = <InputCheckbox @bind-Value="Personality.Adaptable"></InputCheckbox></p>
+    <p>Independent = <InputCheckbox @bind-Value="Personality.Independent"></InputCheckbox></p>
+    <p>Laidback = <InputCheckbox @bind-Value="Personality.LaidBack"></InputCheckbox></p>
 
 
     <h3>Dog Preferences</h3>
+    <p>Works with boys = <InputCheckbox @bind-Value="Preferences.WorksWithBoys"></InputCheckbox></p>
+    <p>Works with girls = <InputCheckbox @bind-Value="Preferences.WorksWithGirls"></InputCheckbox></p>
+    <p>Average walk = <InputNumber @bind-Value="Preferences.AverageWalk"></InputNumber> </p>
+    <p>Timid = <InputCheckbox @bind-Value="Preferences.Timid"></InputCheckbox> </p>
+    <p>Confident = <InputCheckbox @bind-Value="Preferences.Confident"></InputCheckbox> </p>
+    <p>Adaptable = <InputCheckbox @bind-Value="Preferences.Adaptable"></InputCheckbox> </p>
+    <p>Independent = <InputCheckbox @bind-Value="Preferences.Independent"></InputCheckbox></p>
+    <p>Laidback = <InputCheckbox @bind-Value="Preferences.LaidBack"></InputCheckbox>  </p>
 
     <button @onclick="()=> SaveDog()">Save dog</button>
 }

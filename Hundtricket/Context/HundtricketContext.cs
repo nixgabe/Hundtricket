@@ -166,5 +166,6 @@ namespace Hundtricket.Context
         public DbSet<UserHobbies> UserHobbies { get; set; }
         public DbSet<UserPreferences> UserPreferences { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserDogs> UserDogs { get; set; }
     }
 }

@@ -22,8 +22,7 @@ namespace Dogtrick.Pages
 
         public async Task GoToProfile()
         {
-            NavigationManager.NavigateTo($"/MainProfile/{MemberId}");
-            //NavigationManager.NavigateTo("/MainProfile");
+            NavigationManager.NavigateTo($"/MainProfile/{MemberId}");            
         }
     }
 }

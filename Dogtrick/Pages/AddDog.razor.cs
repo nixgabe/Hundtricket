@@ -9,6 +9,8 @@ namespace Dogtrick.Pages
     {
         [Inject]
         public IDogRepository _dogRepository { get; set; }
+        [Inject]
+        public NavigationManager _navigationManager { get; set; }
 
         [Parameter]
         public string MemberId { get; set; }
@@ -25,23 +27,77 @@ namespace Dogtrick.Pages
             Allergenic = false,
         };
 
-        public DogFilters Personality { get; set; }
-        public DogFilters Preferences { get; set; }
-        public UserDogs NewUserDogs { get; set; }
+        public DogFilters Personality = new DogFilters()
+        {
+            Id = Guid.NewGuid(),
+            AverageWalk = 0,
+            WorksWithBoys = false,
+            WorksWithGirls = false,
+            Timid = false,
+            Confident = false,
+            Adaptable = false,
+            Independent = false,
+            LaidBack = false
+        };
+        public DogFilters Preferences = new DogFilters()
+        {
+            Id = Guid.NewGuid(),
+            AverageWalk = 0,
+            WorksWithBoys = false,
+            WorksWithGirls = false,
+            Timid = false,
+            Confident = false,
+            Adaptable = false,
+            Independent = false,
+            LaidBack = false
+        };
+        
         
         public AddDogViewModel AddDogViewModel = new AddDogViewModel();
 
         protected override async Task OnInitializedAsync()
         {
             ParsedMemberId = Guid.Parse(MemberId);
-            AddDogViewModel = await _dogRepository.FillDogviewModelLists();
+            AddDogViewModel = await _dogRepository.FillAddDogviewModelLists();
         }
 
-        public void SaveDog()
+        public async void SaveDog()
         {
-            NewUserDogs.Id = Guid.NewGuid();
-            NewUserDogs.UsersDogId = ParsedMemberId;
-            NewUserDogs.DogId = NewDog.DogId;
+            UserDogs userDogs = new UserDogs()
+            {
+                Id = Guid.NewGuid(),
+                UsersDogId = ParsedMemberId,
+                DogId = NewDog.DogId
+            };
+
+            DogFiltersRelationships dogRelationships = new DogFiltersRelationships() 
+            { 
+                Id = Guid.NewGuid(),
+                DogPersonality = Personality.Id,
+                DogPreferences = Preferences.Id
+            };
+
+            NewDog.DogFiltersRelationshipsId = dogRelationships.Id;
+
+            DogPictures dogPictures = new DogPictures()
+            {
+                Id = Guid.NewGuid(),
+                DogPicturesId = Guid.NewGuid(),
+                Photo = "Pic"
+
+            };
+
+            DogPicturesRelationships dogPicturesRelationships = new DogPicturesRelationships()
+            {
+                Id = Guid.NewGuid(),
+                DogPicturesId = dogPictures.DogPicturesId
+            };
+
+            NewDog.DogPicturesRelationshipsId = dogPicturesRelationships.Id;
+
+            _dogRepository.SaveNewDog(userDogs, Personality, Preferences, NewDog, dogRelationships, dogPictures, dogPicturesRelationships);
+
+            _navigationManager.NavigateTo($"/MainProfile/{MemberId}");
         }
     }
 }

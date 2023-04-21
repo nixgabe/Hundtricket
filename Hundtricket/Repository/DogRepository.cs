@@ -31,7 +31,7 @@ namespace Infrastructure.Repository
                 .ToList();
         }
 
-        public async Task<AddDogViewModel> FillDogviewModelLists()
+        public async Task<AddDogViewModel> FillAddDogviewModelLists()
         {
             var context = _dbContextFactory.CreateDbContext();
             var list = new AddDogViewModel();
@@ -55,6 +55,20 @@ namespace Infrastructure.Repository
             }).ToList();
 
             return list;
+        }
+
+        public void SaveNewDog(UserDogs userDog, DogFilters personality, DogFilters preferences, Dog newDog, DogFiltersRelationships filtersRelationships, DogPictures dogPictures, DogPicturesRelationships dogPicturesRelationships)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+
+            context.UserDogs.Add(userDog);
+            context.DogFilters.Add(personality);
+            context.DogFilters.Add(preferences);
+            context.DogFiltersRelationships.Add(filtersRelationships);
+            context.DogPictures.Add(dogPictures);
+            context.DogPicturesRelationships.Add(dogPicturesRelationships);
+            context.Dogs.Add(newDog);
+            context.SaveChanges();
         }
     }
 }
