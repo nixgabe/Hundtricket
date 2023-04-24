@@ -1,0 +1,113 @@
+﻿@page "/DogProfile/{dogId}"
+@attribute [Authorize(Roles = "Registered")]
+
+@if(Dog == null){
+    <p>Loading...</p>
+
+}
+
+else{
+    <div hidden="@EditDog">
+        <table>
+            <button @onclick="() => EditDogButton()">Edit dog</button>
+            <thead>
+                <th>
+                    @Dog.Name
+                </th>
+                <th></th>
+            </thead>
+            <tr>                
+                <p>Age - @Dog.Age</p>
+                <p>Gender - @Dog.Gender</p>
+                <p>Breed - @Dog.DogBreed.Breed</p>
+                <p>Size - @Dog.DogSize.Size</p>
+                <p>Energy level - @Dog.DogEnergyLevel.EnergyLevel</p>
+                <p>About - @Dog.About</p>
+                <p>Allergenic - @Dog.Allergenic</p>
+            </tr>
+            <tr>
+                <p><b>Personality</b></p>
+                <p>Works with boys - @DogPreferences.Personality.WorksWithBoys</p>
+                <p>Works with girls - @DogPreferences.Personality.WorksWithGirls</p>
+                <p>Average walk - @DogPreferences.Personality.AverageWalk</p>
+                <p>Timid - @DogPreferences.Personality.Timid</p>
+                <p>Confident - @DogPreferences.Personality.Confident</p>
+                <p>Adaptable - @DogPreferences.Personality.Adaptable</p>
+                <p>Independent - @DogPreferences.Personality.Independent</p>
+                <p>Laid back - @DogPreferences.Personality.LaidBack</p>
+            </tr>
+            <tr>
+                <p><b>Preferences</b></p>
+                <p>Works with boys - @DogPreferences.Preferences.WorksWithBoys</p>
+                <p>Works with girls - @DogPreferences.Preferences.WorksWithGirls</p>
+                <p>Average walk - @DogPreferences.Preferences.AverageWalk</p>
+                <p>Timid - @DogPreferences.Preferences.Timid</p>
+                <p>Confident - @DogPreferences.Preferences.Confident</p>
+                <p>Adaptable - @DogPreferences.Preferences.Adaptable</p>
+                <p>Independent - @DogPreferences.Preferences.Independent</p>
+                <p>Laid back - @DogPreferences.Preferences.LaidBack</p>
+            </tr>
+        </table>
+    </div>
+    <div hidden="@(!EditDog)">
+        <table>
+            <tr>
+                <p>Name - <InputText @bind-Value="@Dog.Name"> </InputText></p>
+                <p>Age - <InputNumber @bind-Value="@Dog.Age"> </InputNumber> </p>
+                <p>Gender - <InputText @bind-Value="@Dog.Gender"></InputText></p>
+                <p>
+                    Breed -
+                    <select @bind="@Dog.DogBreedId">
+                        @foreach (var breed in DogViewModel.Breeds)
+                        {
+                            <option value="@breed.Id">@breed.Breed</option>
+                        }
+                    </select>
+                </p>
+                <p>
+                    Size - 
+                    <select @bind="@Dog.DogSizeId">
+                        @foreach(var size in DogViewModel.Sizes)
+                        {
+                            <option value="@size.Id">@size.Size</option>
+                        }
+                    </select>
+                </p>
+                <p>
+                    Energy level - 
+                    <select tabindex="@Dog.DogEnergyLevelId">
+                        @foreach (var level in DogViewModel.EnergyLevels)
+                        {
+                            <option value="@level.Id">@level.EnergyLevel</option>
+                        }
+                    </select>
+                </p>
+                <p>About - <InputText @bind-Value="@Dog.About"></InputText></p>
+                <p>Allergenic - <InputCheckbox @bind-Value="@Dog.Allergenic"> </InputCheckbox> </p>
+            </tr>
+            <tr>
+                <p><b>Personality</b></p>
+                <p>Works with boys - <InputCheckbox @bind-Value="@DogPreferences.Personality.WorksWithBoys"></InputCheckbox></p>
+                <p>Works with girls - <InputCheckbox @bind-Value="@DogPreferences.Personality.WorksWithGirls"></InputCheckbox></p>
+                <p>Average walk - <InputNumber @bind-Value="@DogPreferences.Personality.AverageWalk"></InputNumber></p>
+                <p>Timid - <InputCheckbox @bind-Value="@DogPreferences.Personality.Timid"></InputCheckbox></p>
+                <p>Confident - <InputCheckbox @bind-Value="@DogPreferences.Personality.Confident"></InputCheckbox></p>                
+                <p>Adaptable - <InputCheckbox @bind-Value="@DogPreferences.Personality.Adaptable"></InputCheckbox></p>
+                <p>Independent - <InputCheckbox @bind-Value="@DogPreferences.Personality.Independent"></InputCheckbox></p>
+                <p>Laid back - <InputCheckbox @bind-Value="@DogPreferences.Personality.LaidBack"></InputCheckbox></p>
+            </tr>
+            <tr>
+                <p><b>Preferences</b></p>
+                <p>Works with boys - <InputCheckbox @bind-Value="@DogPreferences.Preferences.WorksWithBoys"></InputCheckbox></p>
+                <p>Works with girls - <InputCheckbox @bind-Value="@DogPreferences.Preferences.WorksWithGirls"></InputCheckbox></p>
+                <p>Average walk - <InputNumber @bind-Value="@DogPreferences.Preferences.AverageWalk"></InputNumber></p>
+                <p>Timid - <InputCheckbox @bind-Value="@DogPreferences.Preferences.Timid"></InputCheckbox></p>
+                <p>Confident - <InputCheckbox @bind-Value="@DogPreferences.Preferences.Confident"></InputCheckbox></p>                
+                <p>Adaptable - <InputCheckbox @bind-Value="@DogPreferences.Preferences.Adaptable"></InputCheckbox></p>
+                <p>Independent - <InputCheckbox @bind-Value="@DogPreferences.Preferences.Independent"></InputCheckbox></p>
+                <p>Laid back - <InputCheckbox @bind-Value="@DogPreferences.Preferences.LaidBack"></InputCheckbox></p>
+            </tr>
+        </table>
+        <button @onclick="() => SaveDogChangesButton()">Save Changes</button>
+    </div>
+}

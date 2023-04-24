@@ -10,20 +10,12 @@
 
 else
 {
-    <button @onclick="() => EditProfile()">Edit profile</button> <button @onclick="() => AddDog()">Add dog</button>
+    <button @onclick="() => EditProfile()">Edit profile</button> <button @onclick="() => ViewDogs()">View your dogs</button>
 
     <div>
         <p>First Name = @User.FirstName</p>
         <p>Last Name = @User.LastName</p>
         <p>Email = @User.Email</p>
         <p>Age = @User.Age</p>
-    </div>
-
-    <div>
-        @foreach (var dog in Dogs)
-        {
-            <p>@dog.Name is @dog.Age years old. Of breed @dog.Breed</p>
-
-        }
-    </div>
+    </div>   
 }

@@ -1,0 +1,24 @@
+﻿@page "/ViewAllDogs/{memberId}"
+@attribute [Authorize(Roles = "Registered")]
+
+<h3>ViewAllDogs</h3>
+
+<button @onclick="() => AddDog()">Add dog</button>
+
+<div>
+    <table>
+        <thead>
+            <th>Dogs</th>
+            <th></th>
+        </thead>
+        <tbody>
+            @foreach (var dog in Dogs)
+            {
+
+                <tr>
+                    <button @onclick="() => DogProfile(dog.Id)"><p>@dog.Name is @dog.Age years old. Of breed @dog.Breed</p></button>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
