@@ -22,6 +22,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
 builder.Services.AddScoped<IDogRepository, DogRepository>();
+builder.Services.AddScoped<IDogFiltersRepository, DogFiltersRepository>();
 builder.Services.AddScoped<IDogPicturesRepository, DogPicturesRepository>();
 builder.Services.AddScoped<IUserHobbiesRepository, UserHobbiesRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();

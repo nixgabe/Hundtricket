@@ -103,5 +103,35 @@ namespace Infrastructure.Repository
 
             return modelList;
         }
+
+        public void UpdateDog(Dog updatedDog)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+            var original = context.Dogs
+                .Where(f => f.DogId == updatedDog.DogId)
+                .FirstOrDefault();
+
+            original.Name = updatedDog.Name;
+            original.Age = updatedDog.Age;
+            original.Gender = updatedDog.Gender;
+            original.About = updatedDog.About;
+            original.DogBreedId = updatedDog.DogBreedId;
+            original.DogSizeId = updatedDog.DogSizeId;
+            original.DogEnergyLevelId = updatedDog.DogEnergyLevelId;
+            original.Allergenic = updatedDog.Allergenic;
+            
+            context.SaveChanges();
+        }
+
+        public async Task<Dog> GetDogOnId(Guid dogId)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+
+            return await context.Dogs.Where(f => f.DogId == dogId)
+                .Include(s => s.DogBreed)
+                .Include(n => n.DogSize)
+                .Include(m => m.DogEnergyLevel)
+                .FirstOrDefaultAsync();
+        }
     }
 }
