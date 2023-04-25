@@ -18,7 +18,7 @@ else{
             </thead>
             <tr>                
                 <p>Age - @Dog.Age</p>
-                <p>Gender - @Dog.Gender</p>
+                <p>Gender - @Dog.Gender.GenderOption</p>
                 <p>Breed - @Dog.DogBreed.Breed</p>
                 <p>Size - @Dog.DogSize.Size</p>
                 <p>Energy level - @Dog.DogEnergyLevel.EnergyLevel</p>
@@ -54,7 +54,15 @@ else{
             <tr>
                 <p>Name - <InputText @bind-Value="@Dog.Name"> </InputText></p>
                 <p>Age - <InputNumber @bind-Value="@Dog.Age"> </InputNumber> </p>
-                <p>Gender - <InputText @bind-Value="@Dog.Gender"></InputText></p>
+                <p>
+                    Gender - 
+                    <select @bind="@Dog.GenderId">
+                        @foreach(var gender in DogViewModel.Genders)
+                        {
+                            <option value="@gender.Id">@gender.GenderOption</option>
+                        }
+                    </select>
+                </p>
                 <p>
                     Breed -
                     <select @bind="@Dog.DogBreedId">

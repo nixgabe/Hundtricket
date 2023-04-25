@@ -21,9 +21,14 @@ else
     <InputNumber @bind-Value="@User.Age"></InputNumber>
 
     <h3>Profile</h3>
-    
+
     <p>Gender</p>
-    <InputText @bind-Value="@UserProfile.Gender"></InputText>
+    <select @bind="@UserProfile.GenderId">
+        @foreach (var gender in Genders)
+        {
+            <option value="@gender.Id">@gender.GenderOption</option>
+        }
+    </select>
     <p>Sexuality</p>
     <InputText @bind-Value="UserProfile.Sexuality"></InputText>
     <p>Job</p>
@@ -37,7 +42,12 @@ else
     <h3>Preferences</h3>
 
     <p>Gender</p>
-    <InputText @bind-Value="UserProfile.UserPreferences.Gender"></InputText>
+    <select @bind="@UserProfile.UserPreferences.Gender">
+        @foreach (var gender in Genders)
+        {
+            <option value="@gender.GenderOption">@gender.GenderOption</option>
+        }
+    </select>    
     <p>Range</p>
     <InputNumber @bind-Value="UserProfile.UserPreferences.LocationRange"></InputNumber>
     <p>Youngest age</p>
