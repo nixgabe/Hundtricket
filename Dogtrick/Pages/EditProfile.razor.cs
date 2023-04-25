@@ -21,6 +21,7 @@ namespace Dogtrick.Pages
         public UserProfile UserProfile { get; set; }
         public UserPreferences Preferences { get; set; }
         public UserHobbies Hobbies { get; set; }
+        public List<Gender> Genders { get; set; }
 
 
 
@@ -29,7 +30,8 @@ namespace Dogtrick.Pages
             ParsedMemberId = Guid.Parse(MemberId);
             User = await _userRepository.GetMemberOnId(ParsedMemberId);
             UserProfile = await _userProfileRepository.GetUserProfileOnMemberId((Guid)User.UserProfileId);
-            Hobbies = UserProfile.UserHobbies;            
+            Hobbies = UserProfile.UserHobbies;
+            Genders = await _userRepository.GetGendersList();
         }
 
         public async void SaveChanges()

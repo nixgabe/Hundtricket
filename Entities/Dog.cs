@@ -5,7 +5,7 @@
         public Guid DogId { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
-        public string Gender { get; set; }
+        public int GenderId { get; set; }
         public string? About { get; set; }
         public int DogBreedId { get; set; }
         public int DogSizeId { get; set; }
@@ -19,6 +19,7 @@
         public virtual DogSize DogSize { get; set; }
         public virtual DogPicturesRelationships DogPicturesRelationships { get; set; }
         public virtual DogFiltersRelationships DogFiltersRelationships { get; set; }
+        public virtual Gender Gender { get; set; }
         
     }
 }

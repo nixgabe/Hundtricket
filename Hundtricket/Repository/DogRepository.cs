@@ -54,6 +54,12 @@ namespace Infrastructure.Repository
                 Size = x.Size
             }).ToList();
 
+            list.Genders = context.Genders.Select(x => new Gender()
+            {
+                Id = x.Id,
+                GenderOption = x.GenderOption,
+            }).ToList();
+
             return list;
         }
 
@@ -113,7 +119,7 @@ namespace Infrastructure.Repository
 
             original.Name = updatedDog.Name;
             original.Age = updatedDog.Age;
-            original.Gender = updatedDog.Gender;
+            original.GenderId = updatedDog.GenderId;
             original.About = updatedDog.About;
             original.DogBreedId = updatedDog.DogBreedId;
             original.DogSizeId = updatedDog.DogSizeId;
@@ -131,6 +137,7 @@ namespace Infrastructure.Repository
                 .Include(s => s.DogBreed)
                 .Include(n => n.DogSize)
                 .Include(m => m.DogEnergyLevel)
+                .Include(o => o.Gender)
                 .FirstOrDefaultAsync();
         }
     }

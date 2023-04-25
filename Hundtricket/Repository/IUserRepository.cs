@@ -9,5 +9,6 @@ namespace Infrastructure.Repository
         public Task<string> GetMemberEmail(Guid memberId);
         public Task<User> GetMemberOnId(Guid memberId);
         public void UpdateUser(User member);
+        public Task<List<Gender>> GetGendersList();
     }
 }

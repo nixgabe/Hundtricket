@@ -15,7 +15,12 @@ else
     <p>Age</p>
     <InputNumber @bind-Value="NewDog.Age"></InputNumber>
     <p>Gender</p>
-    <InputText @bind-Value="NewDog.Gender"></InputText>
+    <select @bind="@NewDog.GenderId">
+        @foreach (var gender in AddDogViewModel.Genders)
+        {
+            <option value="@gender.Id">@gender.GenderOption</option>
+        }
+    </select>
     <p>Breed</p>
     <select @bind="@NewDog.DogBreedId">
         @foreach(var breed in AddDogViewModel.Breeds)

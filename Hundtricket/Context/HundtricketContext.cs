@@ -47,10 +47,10 @@ namespace Hundtricket.Context
 
             modelBuilder.Entity<Dog>()
                 .HasData(
-                new Dog { DogId = EddieId, Name = "Eddie", Age = 1, Gender = "Male",  DogBreedId = EddieBreed, DogPicturesRelationshipsId = EddiesPicsId, 
+                new Dog { DogId = EddieId, Name = "Eddie", Age = 1, GenderId = 1,  DogBreedId = EddieBreed, DogPicturesRelationshipsId = EddiesPicsId, 
                     DogFiltersRelationshipsId = EddiesFilters, DogSizeId = 3, DogEnergyLevelId = 2
                 },
-                new Dog { DogId = ThorId, Name = "Thor", Age = 11, Gender = "Male", DogBreedId = ThorBreed, DogPicturesRelationshipsId = ThorsPicsId, 
+                new Dog { DogId = ThorId, Name = "Thor", Age = 11, GenderId = 1, DogBreedId = ThorBreed, DogPicturesRelationshipsId = ThorsPicsId, 
                     DogFiltersRelationshipsId = ThorsFilters, DogSizeId = 4, DogEnergyLevelId = 1
                 });
 
@@ -147,10 +147,13 @@ namespace Hundtricket.Context
 
             modelBuilder.Entity<UserProfile>()
                 .HasData(
-                new UserProfile { Id = GabesProfileId, About = "Test Content", Gender = "Male", Job = "Student", Location = "Bullaren", Sexuality = "Bisexual",
+                new UserProfile { Id = GabesProfileId, About = "Test Content", GenderId = 1, Job = "Student", Location = "Bullaren", Sexuality = "Bisexual",
                     UserHobbiesId = GabesHobbyId, UserPreferencesId = GabesPreferenceId});
 
-            
+            modelBuilder.Entity<Gender>()
+                .HasData(
+                new Gender { Id = 1, GenderOption = "Male"},
+                new Gender { Id = 2, GenderOption = "Female" });            
         }
 
         public DbSet<Dog> Dogs { get; set; }
@@ -167,5 +170,6 @@ namespace Hundtricket.Context
         public DbSet<UserPreferences> UserPreferences { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserDogs> UserDogs { get; set; }
+        public DbSet<Gender> Genders { get; set; }
     }
 }

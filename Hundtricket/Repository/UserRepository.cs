@@ -57,5 +57,12 @@ namespace Infrastructure.Repository
 
             context.SaveChanges();
         }
+
+        public async Task<List<Gender>> GetGendersList()
+        {
+            var context = _dbContextFactory.CreateDbContext();
+
+            return await context.Genders.ToListAsync();
+        }
     }
 }
