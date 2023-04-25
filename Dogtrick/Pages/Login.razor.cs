@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Infrastructure.Repository;
+using Infrastructure.Service;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
@@ -17,6 +18,8 @@ namespace Dogtrick.Pages
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        [Inject]
+        public IMemberService _memberService { get; set; }
 
         public async Task MemberLogin()
         {
@@ -41,6 +44,7 @@ namespace Dogtrick.Pages
             authenticationType: "True");
             authState.User.AddIdentity(regClaim);
 
+            _memberService.SetMemberId(member.Id);
 
             var memberId = member.Id.ToString();
             NavigationManager.NavigateTo($"/Home/{memberId}");

@@ -1,4 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Infrastructure.Service;
+
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Dogtrick</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -29,7 +32,7 @@
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/MainProfile" Match="NavLinkMatch.All">
+                    <NavLink class="nav-link" href="@($"/MainProfile/{SendToMainProfile()}")" Match="NavLinkMatch.All">
                         <span class="oi oi-person" aria-hidden="true"></span> Profile
                     </NavLink>
                 </div>
@@ -44,6 +47,9 @@
 </div>
 
 @code {
+    [Inject]
+    public IMemberService _memberService { get; set; }
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -51,5 +57,10 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private string SendToMainProfile()
+    {
+        return _memberService.MemberId;       
     }
 }

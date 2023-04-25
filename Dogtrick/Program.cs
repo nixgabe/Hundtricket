@@ -2,6 +2,7 @@ using Dogtrick.Areas.Identity;
 //using Dogtrick.Data;
 using Hundtricket.Context;
 using Infrastructure.Repository;
+using Infrastructure.Service;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,8 @@ builder.Services.AddScoped<IUserHobbiesRepository, UserHobbiesRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IUserPreferencesRepository, UserPreferencesRepository>();
+
+builder.Services.AddScoped<IMemberService, MemberService>();
 
 builder.Services.AddDbContext<HundtricketContext>();
 
