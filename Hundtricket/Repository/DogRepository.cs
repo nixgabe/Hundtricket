@@ -2,6 +2,7 @@
 using Hundtricket.Context;
 using Infrastructure.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Infrastructure.Repository
 {
@@ -63,9 +64,16 @@ namespace Infrastructure.Repository
             return list;
         }
 
-        public void SaveNewDog(UserDogs userDog, DogFilters personality, DogFilters preferences, Dog newDog, DogFiltersRelationships filtersRelationships, DogPictures dogPictures, DogPicturesRelationships dogPicturesRelationships)
+        public void SaveNewDog(UserDogs userDog, DogFilters personality, DogFilters preferences, Dog newDog, DogFiltersRelationships filtersRelationships, 
+            DogPictures dogPictures, DogPicturesRelationships dogPicturesRelationships, Guid memberId)
         {
             var context = _dbContextFactory.CreateDbContext();
+
+            var userRelationships = new UserDogRelationships()
+            {
+                Id = Guid.NewGuid(),
+                UsersDogId = userDog.Id,
+            };
 
             context.UserDogs.Add(userDog);
             context.DogFilters.Add(personality);
@@ -74,6 +82,12 @@ namespace Infrastructure.Repository
             context.DogPictures.Add(dogPictures);
             context.DogPicturesRelationships.Add(dogPicturesRelationships);
             context.Dogs.Add(newDog);
+            context.UserDogRelationships.Add(userRelationships);
+
+            var user = context.Users.Where(x => x.Id == memberId).FirstOrDefault();
+
+            user.UserDogRelationshipsId = userRelationships.Id;
+
             context.SaveChanges();
         }
 
@@ -139,6 +153,39 @@ namespace Infrastructure.Repository
                 .Include(m => m.DogEnergyLevel)
                 .Include(o => o.Gender)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<DogViewModel>> GetAllDogsExceptUsers(Guid? userDogRelationshipsId)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+            var dogList = new List<DogViewModel>();
+
+            var relationshipsId = context.UserDogRelationships
+                .Where(f => f.Id == userDogRelationshipsId)
+                .Select(f => f.UsersDogId).FirstOrDefault();
+            
+            var ownerId = context.UserDogs
+                .Where(f => f.Id == relationshipsId)
+                .Select(s => s.UsersDogId).FirstOrDefault();
+
+            var userDogIdList = context.UserDogs
+                .Where(f => f.UsersDogId == ownerId)
+                .Select(f => f.DogId).ToList();
+
+
+            //Probably needs updating since it's not taking any filters with itself yet. But different issue different task
+            dogList = context.Dogs
+                .Include(f => f.DogBreed)
+                .Select(dog => new DogViewModel()
+            {
+                Id = dog.DogId,
+                Name = dog.Name,
+                Age = dog.Age,
+                Breed = dog.DogBreed.Breed,
+                PicturesId = dog.DogPicturesRelationshipsId
+            }).Where(f => !userDogIdList.Contains(f.Id)).ToList();   
+
+            return dogList;
         }
     }
 }
