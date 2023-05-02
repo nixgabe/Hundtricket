@@ -95,7 +95,7 @@ namespace Dogtrick.Pages
 
             NewDog.DogPicturesRelationshipsId = dogPicturesRelationships.Id;
 
-            _dogRepository.SaveNewDog(userDogs, Personality, Preferences, NewDog, dogRelationships, dogPictures, dogPicturesRelationships);
+            _dogRepository.SaveNewDog(userDogs, Personality, Preferences, NewDog, dogRelationships, dogPictures, dogPicturesRelationships, ParsedMemberId);
 
             _navigationManager.NavigateTo($"/MainProfile/{MemberId}");
         }
