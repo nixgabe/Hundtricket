@@ -10,7 +10,7 @@ namespace Infrastructure.Repository
 {
     public interface IDogFiltersRepository 
     {
-        public Task<DogPreferencesViewModel> GetDogFiltersOnId(Guid dogFiltersRelationshipId);
-        public void UpdateDogFilters(DogPreferencesViewModel dogPreferencesViewModel);
+        public Task<DogFilterViewModel> GetDogFiltersOnId(Dog dog);
+        public void UpdateDogFilters(DogFilterViewModel dogPreferencesViewModel, Guid dogId);
     }
 }

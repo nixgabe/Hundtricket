@@ -33,7 +33,6 @@ namespace Hundtricket.Context
             int EddieBreed = 1;
             Guid EddiesPicsId = Guid.NewGuid();
             Guid EddiesPictures = Guid.NewGuid();
-            Guid EddiesFilters = Guid.NewGuid();
             Guid EddiesPersonality = Guid.NewGuid();
             Guid EddiesPreferences = Guid.NewGuid();
             
@@ -41,17 +40,16 @@ namespace Hundtricket.Context
             int ThorBreed = 2;
             Guid ThorsPicsId = Guid.NewGuid();
             Guid ThorsPictures = Guid.NewGuid();
-            Guid ThorsFilters = Guid.NewGuid();
             Guid ThorsPersonality = Guid.NewGuid();
             Guid ThorsPreferences = Guid.NewGuid();
 
             modelBuilder.Entity<Dog>()
                 .HasData(
                 new Dog { DogId = EddieId, Name = "Eddie", Age = 1, GenderId = 1,  DogBreedId = EddieBreed, DogPicturesRelationshipsId = EddiesPicsId, 
-                    DogFiltersRelationshipsId = EddiesFilters, DogSizeId = 3, DogEnergyLevelId = 2
+                    DogPersonalityId = EddiesPersonality, DogPreferencesId = EddiesPreferences, DogSizeId = 3, DogEnergyLevelId = 2
                 },
-                new Dog { DogId = ThorId, Name = "Thor", Age = 11, GenderId = 1, DogBreedId = ThorBreed, DogPicturesRelationshipsId = ThorsPicsId, 
-                    DogFiltersRelationshipsId = ThorsFilters, DogSizeId = 4, DogEnergyLevelId = 1
+                new Dog { DogId = ThorId, Name = "Thor", Age = 11, GenderId = 1, DogBreedId = ThorBreed, DogPicturesRelationshipsId = ThorsPicsId,
+                    DogPersonalityId = ThorsPersonality, DogPreferencesId = ThorsPreferences, DogSizeId = 4, DogEnergyLevelId = 1
                 });
 
             modelBuilder.Entity<DogBreed>().HasData(
@@ -94,21 +92,15 @@ namespace Hundtricket.Context
                 new DogPictures { Id = Guid.NewGuid(), DogPicturesId = ThorsPictures, Photo = "Thors second profile Picture" }
                 );
 
-            modelBuilder.Entity<DogFiltersRelationships>().HasData(
-                new DogFiltersRelationships { Id = EddiesFilters, DogPersonality = EddiesPersonality, DogPreferences = EddiesPreferences },
-                new DogFiltersRelationships { Id = ThorsFilters, DogPersonality = ThorsPersonality, DogPreferences = ThorsPreferences }
+            modelBuilder.Entity<DogPersonality>().HasData(
+                new DogPersonality { Id = EddiesPersonality, WorksWithBoys = true, WorksWithGirls = true, AverageWalk = 4, Timid = false, Confident = true, Adaptable = false, Independent = false, LaidBack = true },
+                new DogPersonality { Id = ThorsPersonality, WorksWithBoys = true, WorksWithGirls = true, AverageWalk = 2, Timid = false, Confident = true, Adaptable = true, Independent = true, LaidBack = true }
                 );
 
-            modelBuilder.Entity<DogFilters>()
-                .HasData(
-                new DogFilters { Id = EddiesPersonality },
-                new DogFilters { Id = EddiesPreferences },
-                new DogFilters { Id = ThorsPersonality },
-                new DogFilters { Id = ThorsPreferences }
+            modelBuilder.Entity<DogPreferences>().HasData(
+                new DogPreferences { Id = EddiesPreferences, WorksWithBoys = true, WorksWithGirls = true, AverageWalk = 4, Timid = false, Confident = true, Adaptable = true, Independent = true, LaidBack = true },
+                new DogPreferences { Id = ThorsPreferences, WorksWithBoys = true, WorksWithGirls = true, AverageWalk = 2, Timid = true, Confident = true, Adaptable = true, Independent = true, LaidBack = true }
                 );
-
-            modelBuilder.Entity<DogFiltersRelationships>()
-                .HasMany(f => f.DogFilters);
 
             Guid GabesId = Guid.NewGuid();
             Guid GabesProfileId = Guid.NewGuid();
@@ -129,10 +121,12 @@ namespace Hundtricket.Context
             modelBuilder.Entity<UserDogRelationships>()
                 .HasMany(f => f.UserDogs);
 
+            Guid UserDogId = Guid.NewGuid();    
+
             modelBuilder.Entity<UserDogs>()
                 .HasData(
-                    new UserDogs { Id = Guid.NewGuid(), UsersDogId = GabesOwnerId, DogId = EddieId },
-                    new UserDogs { Id = Guid.NewGuid(), UsersDogId = GabesOwnerId, DogId = ThorId }
+                    new UserDogs { Id = GabesOwnerId, UsersDogId = UserDogId, DogId = EddieId },
+                    new UserDogs { Id = Guid.NewGuid(), UsersDogId = UserDogId, DogId = ThorId }
                 );
 
             modelBuilder.Entity<UserPreferences>()
@@ -160,8 +154,8 @@ namespace Hundtricket.Context
         public DbSet<DogBreed> DogBreeds { get; set; }
         public DbSet<DogPicturesRelationships> DogPicturesRelationships { get; set; }
         public DbSet<DogPictures> DogPictures { get; set; }
-        public DbSet<DogFiltersRelationships> DogFiltersRelationships { get; set; }
-        public DbSet<DogFilters> DogFilters { get; set; }
+        public DbSet<DogPreferences> DogPreferences { get; set; }
+        public DbSet<DogPersonality> DogPersonality { get; set; }
         public DbSet<DogSize> DogSizes { get; set; }
         public DbSet<DogEnergyLevel> DogEnergyLevels { get; set; }
         public DbSet<User> Users { get; set; }

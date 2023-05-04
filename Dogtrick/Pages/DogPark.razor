@@ -1,4 +1,6 @@
-﻿@page "/DogPark/{memberId}"
+﻿@using MudBlazor
+
+@page "/DogPark/{memberId}"
 
 <h3>The Dog Park</h3>
 
@@ -9,61 +11,66 @@
 
 else
 {
-    <div>
-        <p>Buttons for the user filters will go here, filled to automatically match preferences of the dogs and distance and stuff</p>
-        <MudButtonGroup Color="Color.Secondary" Size="Size.Medium" Variant="Variant.Outlined">
-            <MudButton>One</MudButton>
-            <MudButton>Two</MudButton>
-            <MudButton>Three</MudButton>
-        </MudButtonGroup>        
-    </div>
 
-    @if(Dogs == null)
+    <p>Pick a dog to filter on</p>
+    <select @bind="@DogName" style="width:250px;">
+        <option value="null"></option>
+        @foreach (var dog in UserDogFilters)
+        {
+            <option value="@dog.DogName">@dog.DogName</option>
+        }
+    </select>
+    <MudButtonGroup Color="Color.Secondary" Size="Size.Medium" Variant="Variant.Outlined">
+        <MudButton @onclick="() => FilterOnDog()">Filter</MudButton>
+    </MudButtonGroup>
+
+
+    @if(FilteredDogs.Count() == 0)
     {
-        <p>Looks like there's no dogs in the park right now!</p>
+        <p>Looks like there's no dogs in the park right now!</p>        
     }
 
-    <p>
-        <MudCarousel Class="mud-width-full" Style="height:300px; width:400px;" AutoCycle="false" TData="object">
-            <BulletTemplate Context="selected">
-                <div Class="mud-button-root mud-icon-button mud-icon-button-color-inherit mud-ripple mud-ripple-icon">
-                    <span class="mud-icon-button-label">
-                        <MudIcon Icon="@(selected ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Circle)" Color="@Color.Inherit" />
-                    </span>
-                </div>
-            </BulletTemplate>
-            <PreviousButtonTemplate>
-                <div Class="mud-button-root mud-icon-button mud-icon-button-color-inherit mud-ripple mud-ripple-icon">
-                    <span class="mud-icon-button-label">
-                        <MudIcon Class="mud-ripple mud-ripple-icon mud-icon-button-size-medium" Icon="@Icons.Material.Filled.SkipPrevious" Color="@Color.Inherit" />
-                    </span>
-                </div>
-            </PreviousButtonTemplate>
-            <NextButtonTemplate>
-                <div Class="mud-button-root mud-icon-button mud-icon-button-color-inherit mud-ripple mud-ripple-icon">
-                    <span class="mud-icon-button-label">
-                        <MudIcon Class="mud-ripple mud-ripple-icon mud-icon-button-size-medium" Icon="@Icons.Material.Filled.SkipNext" Color="@Color.Inherit" />
-                    </span>
-                </div>
-            </NextButtonTemplate>
-            <ChildContent>
-                @foreach (var dog in Dogs)
-                {
-                    <MudCarouselItem Color="@Color.Primary">
-                        <MudCard>
-                            <center>
-                                <MudCardContent>
-                                    <MudText>@dog.Name</MudText>
-                                    <MudText Typo="Typo.body2">is @dog.Age years old. Of breed @dog.Breed</MudText>
-                                </MudCardContent>
-                                <MudCardActions>
-                                    <MudButton Variant="Variant.Text" Color="Color.Primary">Bark now!</MudButton>
-                                </MudCardActions>
-                            </center>
-                        </MudCard>
-                    </MudCarouselItem>
-                }   
-            </ChildContent>
-        </MudCarousel>
-     </p>
+
+    <MudCarousel Class="mud-width-full" Style="height:300px; width:400px;" AutoCycle="false" TData="object">
+        <BulletTemplate Context="selected">
+            <div Class="mud-button-root mud-icon-button mud-icon-button-color-inherit mud-ripple mud-ripple-icon">
+                <span class="mud-icon-button-label">
+                    <MudIcon Icon="@(selected ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Circle)" Color="@Color.Inherit" />
+                </span>
+            </div>
+        </BulletTemplate>
+        <PreviousButtonTemplate>
+            <div Class="mud-button-root mud-icon-button mud-icon-button-color-inherit mud-ripple mud-ripple-icon">
+                <span class="mud-icon-button-label">
+                    <MudIcon Class="mud-ripple mud-ripple-icon mud-icon-button-size-medium" Icon="@Icons.Material.Filled.SkipPrevious" Color="@Color.Inherit" />
+                </span>
+            </div>
+        </PreviousButtonTemplate>
+        <NextButtonTemplate>
+            <div Class="mud-button-root mud-icon-button mud-icon-button-color-inherit mud-ripple mud-ripple-icon">
+                <span class="mud-icon-button-label">
+                    <MudIcon Class="mud-ripple mud-ripple-icon mud-icon-button-size-medium" Icon="@Icons.Material.Filled.SkipNext" Color="@Color.Inherit" />
+                </span>
+            </div>
+        </NextButtonTemplate>
+        <ChildContent>
+            @foreach (var dog in FilteredDogs)
+            {
+                <MudCarouselItem Color="@Color.Primary">
+                    <MudCard>
+                        <center>
+                            <MudCardContent>
+                                <MudText>@dog.Name</MudText>
+                                <MudText Typo="Typo.body2">is @dog.Age years old. Of breed @dog.DogBreed</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton Variant="Variant.Text" Color="Color.Primary">Bark now!</MudButton>
+                            </MudCardActions>
+                        </center>
+                    </MudCard>
+                </MudCarouselItem>
+            }
+        </ChildContent>
+    </MudCarousel>
+
 }

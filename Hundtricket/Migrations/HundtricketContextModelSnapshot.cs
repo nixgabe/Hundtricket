@@ -43,10 +43,13 @@ namespace Infrastructure.Migrations
                     b.Property<int>("DogEnergyLevelId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("DogFiltersRelationshipsId")
+                    b.Property<Guid>("DogPersonalityId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("DogPicturesRelationshipsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DogPreferencesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("DogSizeId")
@@ -65,9 +68,11 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("DogEnergyLevelId");
 
-                    b.HasIndex("DogFiltersRelationshipsId");
+                    b.HasIndex("DogPersonalityId");
 
                     b.HasIndex("DogPicturesRelationshipsId");
+
+                    b.HasIndex("DogPreferencesId");
 
                     b.HasIndex("DogSizeId");
 
@@ -78,26 +83,28 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            DogId = new Guid("9221a252-463a-4faa-ab1f-6dd7abb1e5c8"),
+                            DogId = new Guid("3686310b-4206-4b54-9fda-48d16b9f8fdd"),
                             Age = 1,
                             Allergenic = false,
                             DogBreedId = 1,
                             DogEnergyLevelId = 2,
-                            DogFiltersRelationshipsId = new Guid("4796463d-2cfc-4e5d-a36e-6d0416b07473"),
-                            DogPicturesRelationshipsId = new Guid("17ac59a1-93ac-45fa-97ad-abb6815d5eb6"),
+                            DogPersonalityId = new Guid("a9bd9fe7-6ce7-4286-91a1-58e97b386944"),
+                            DogPicturesRelationshipsId = new Guid("a87c8bd0-825a-4be4-b4cd-db1826ee410b"),
+                            DogPreferencesId = new Guid("75939895-4177-441f-a4c8-06888d8b43ac"),
                             DogSizeId = 3,
                             GenderId = 1,
                             Name = "Eddie"
                         },
                         new
                         {
-                            DogId = new Guid("47784e4b-02a7-4b06-8a92-3db141b465ea"),
+                            DogId = new Guid("b112c433-2235-4ea8-9183-7aaae56b2233"),
                             Age = 11,
                             Allergenic = false,
                             DogBreedId = 2,
                             DogEnergyLevelId = 1,
-                            DogFiltersRelationshipsId = new Guid("18c979c0-4f63-4f06-95d3-270d9a079ba8"),
-                            DogPicturesRelationshipsId = new Guid("017d061b-805c-4e41-b560-ae07bdaed8de"),
+                            DogPersonalityId = new Guid("05a01d7f-593c-4744-b222-a495726e1ee9"),
+                            DogPicturesRelationshipsId = new Guid("bd7e9b8f-282c-4a5f-be9e-8cd94aa65cc7"),
+                            DogPreferencesId = new Guid("28fdcaf0-2c0b-47b3-bff7-911aca09232b"),
                             DogSizeId = 4,
                             GenderId = 1,
                             Name = "Thor"
@@ -202,7 +209,7 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Entities.DogFilters", b =>
+            modelBuilder.Entity("Entities.DogPersonality", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -216,9 +223,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("Confident")
                         .HasColumnType("bit");
-
-                    b.Property<Guid?>("DogFiltersRelationshipsId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Independent")
                         .HasColumnType("bit");
@@ -237,89 +241,32 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DogFiltersRelationshipsId");
-
-                    b.ToTable("DogFilters");
+                    b.ToTable("DogPersonality");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("03b0a933-9568-441d-a7ba-0e91688e0ede"),
+                            Id = new Guid("a9bd9fe7-6ce7-4286-91a1-58e97b386944"),
                             Adaptable = false,
-                            AverageWalk = 0m,
-                            Confident = false,
+                            AverageWalk = 4m,
+                            Confident = true,
                             Independent = false,
-                            LaidBack = false,
+                            LaidBack = true,
                             Timid = false,
-                            WorksWithBoys = false,
-                            WorksWithGirls = false
+                            WorksWithBoys = true,
+                            WorksWithGirls = true
                         },
                         new
                         {
-                            Id = new Guid("a6ea24a7-3630-4dc8-806f-9d49b5619b39"),
-                            Adaptable = false,
-                            AverageWalk = 0m,
-                            Confident = false,
-                            Independent = false,
-                            LaidBack = false,
+                            Id = new Guid("05a01d7f-593c-4744-b222-a495726e1ee9"),
+                            Adaptable = true,
+                            AverageWalk = 2m,
+                            Confident = true,
+                            Independent = true,
+                            LaidBack = true,
                             Timid = false,
-                            WorksWithBoys = false,
-                            WorksWithGirls = false
-                        },
-                        new
-                        {
-                            Id = new Guid("cc92ebca-35d1-4502-aaf7-fc3de946e8c3"),
-                            Adaptable = false,
-                            AverageWalk = 0m,
-                            Confident = false,
-                            Independent = false,
-                            LaidBack = false,
-                            Timid = false,
-                            WorksWithBoys = false,
-                            WorksWithGirls = false
-                        },
-                        new
-                        {
-                            Id = new Guid("3e9657b0-bb3c-49e1-944d-49efaf3783b6"),
-                            Adaptable = false,
-                            AverageWalk = 0m,
-                            Confident = false,
-                            Independent = false,
-                            LaidBack = false,
-                            Timid = false,
-                            WorksWithBoys = false,
-                            WorksWithGirls = false
-                        });
-                });
-
-            modelBuilder.Entity("Entities.DogFiltersRelationships", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DogPersonality")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DogPreferences")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DogFiltersRelationships");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4796463d-2cfc-4e5d-a36e-6d0416b07473"),
-                            DogPersonality = new Guid("03b0a933-9568-441d-a7ba-0e91688e0ede"),
-                            DogPreferences = new Guid("a6ea24a7-3630-4dc8-806f-9d49b5619b39")
-                        },
-                        new
-                        {
-                            Id = new Guid("18c979c0-4f63-4f06-95d3-270d9a079ba8"),
-                            DogPersonality = new Guid("cc92ebca-35d1-4502-aaf7-fc3de946e8c3"),
-                            DogPreferences = new Guid("3e9657b0-bb3c-49e1-944d-49efaf3783b6")
+                            WorksWithBoys = true,
+                            WorksWithGirls = true
                         });
                 });
 
@@ -348,20 +295,20 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c6e5cf6c-65cc-4ccf-a6b3-05dc371e806b"),
-                            DogPicturesId = new Guid("fadb314c-6ba7-481e-895a-8e970009d6b4"),
+                            Id = new Guid("ce947349-0710-4e93-9526-d0459ef54cd8"),
+                            DogPicturesId = new Guid("2ee94d6a-1f77-49f8-9d90-a689ffb27af8"),
                             Photo = "Eddies only profile Picture"
                         },
                         new
                         {
-                            Id = new Guid("6d15558c-29ae-4efc-b7d0-9dbfb7097dca"),
-                            DogPicturesId = new Guid("3bd979bb-1f26-4ab2-bbc1-3f1deee4451b"),
+                            Id = new Guid("ffb78ddc-d259-4796-99d6-0e232f41afeb"),
+                            DogPicturesId = new Guid("26f31ab2-0db8-4364-9f23-c50c76974f9c"),
                             Photo = "Thors first profile Picture"
                         },
                         new
                         {
-                            Id = new Guid("acaed7cb-f399-4b90-97b6-d73cd5680c03"),
-                            DogPicturesId = new Guid("3bd979bb-1f26-4ab2-bbc1-3f1deee4451b"),
+                            Id = new Guid("fda3f3e1-6cf1-4cd1-80ca-3f21f8b90c3f"),
+                            DogPicturesId = new Guid("26f31ab2-0db8-4364-9f23-c50c76974f9c"),
                             Photo = "Thors second profile Picture"
                         });
                 });
@@ -382,13 +329,74 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("17ac59a1-93ac-45fa-97ad-abb6815d5eb6"),
-                            DogPicturesId = new Guid("fadb314c-6ba7-481e-895a-8e970009d6b4")
+                            Id = new Guid("a87c8bd0-825a-4be4-b4cd-db1826ee410b"),
+                            DogPicturesId = new Guid("2ee94d6a-1f77-49f8-9d90-a689ffb27af8")
                         },
                         new
                         {
-                            Id = new Guid("017d061b-805c-4e41-b560-ae07bdaed8de"),
-                            DogPicturesId = new Guid("3bd979bb-1f26-4ab2-bbc1-3f1deee4451b")
+                            Id = new Guid("bd7e9b8f-282c-4a5f-be9e-8cd94aa65cc7"),
+                            DogPicturesId = new Guid("26f31ab2-0db8-4364-9f23-c50c76974f9c")
+                        });
+                });
+
+            modelBuilder.Entity("Entities.DogPreferences", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Adaptable")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("AverageWalk")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Confident")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Independent")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LaidBack")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Timid")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("WorksWithBoys")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("WorksWithGirls")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DogPreferences");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("75939895-4177-441f-a4c8-06888d8b43ac"),
+                            Adaptable = true,
+                            AverageWalk = 4m,
+                            Confident = true,
+                            Independent = true,
+                            LaidBack = true,
+                            Timid = false,
+                            WorksWithBoys = true,
+                            WorksWithGirls = true
+                        },
+                        new
+                        {
+                            Id = new Guid("28fdcaf0-2c0b-47b3-bff7-911aca09232b"),
+                            Adaptable = true,
+                            AverageWalk = 2m,
+                            Confident = true,
+                            Independent = true,
+                            LaidBack = true,
+                            Timid = true,
+                            WorksWithBoys = true,
+                            WorksWithGirls = true
                         });
                 });
 
@@ -508,15 +516,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eebd1dcf-71f7-4407-8713-206e489d39ae"),
+                            Id = new Guid("25e317d5-e23b-486f-a291-4ad5010bbb95"),
                             Age = 30,
                             Email = "Nixgabriel92@gmail.com",
                             FirstName = "Gabriel",
                             IsSignedOn = false,
                             LastName = "Nix",
                             Password = "Blank",
-                            UserDogRelationshipsId = new Guid("8e10901a-03f0-450d-ba77-46767aadbf34"),
-                            UserProfileId = new Guid("6e255e05-1446-4664-9f9e-3f72568f3c4b")
+                            UserDogRelationshipsId = new Guid("5cc4785b-acbc-4830-8724-b56b30174ab7"),
+                            UserProfileId = new Guid("9e0a9556-0725-4c31-a6d8-4cd200b37df1")
                         });
                 });
 
@@ -536,8 +544,8 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8e10901a-03f0-450d-ba77-46767aadbf34"),
-                            UsersDogId = new Guid("e758e986-2287-4161-b034-543aefbccb26")
+                            Id = new Guid("5cc4785b-acbc-4830-8724-b56b30174ab7"),
+                            UsersDogId = new Guid("b645ad7f-a3b3-410d-b7cd-ad522634d50c")
                         });
                 });
 
@@ -565,15 +573,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("44ed7340-380e-4423-be55-4579286baef4"),
-                            DogId = new Guid("9221a252-463a-4faa-ab1f-6dd7abb1e5c8"),
-                            UsersDogId = new Guid("e758e986-2287-4161-b034-543aefbccb26")
+                            Id = new Guid("b645ad7f-a3b3-410d-b7cd-ad522634d50c"),
+                            DogId = new Guid("3686310b-4206-4b54-9fda-48d16b9f8fdd"),
+                            UsersDogId = new Guid("5efca5bb-d6b7-4d67-8008-b92971e5fdd1")
                         },
                         new
                         {
-                            Id = new Guid("9b0428e2-a609-4e55-966c-40212b0ed775"),
-                            DogId = new Guid("47784e4b-02a7-4b06-8a92-3db141b465ea"),
-                            UsersDogId = new Guid("e758e986-2287-4161-b034-543aefbccb26")
+                            Id = new Guid("9dae09d8-d9cf-4fad-ba92-b1e5a8c1f934"),
+                            DogId = new Guid("b112c433-2235-4ea8-9183-7aaae56b2233"),
+                            UsersDogId = new Guid("5efca5bb-d6b7-4d67-8008-b92971e5fdd1")
                         });
                 });
 
@@ -611,7 +619,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a6cd577a-ad2b-40b4-a04b-7ba5b1e30131"),
+                            Id = new Guid("759fc8b5-7a02-4df0-820d-56eda34e269e"),
                             Gaming = true,
                             Gymming = false,
                             Hiking = false,
@@ -647,7 +655,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3a85de46-687b-4107-bf1a-fd2af381e325"),
+                            Id = new Guid("d3e56832-8530-47d3-9f0a-3ee760b7efb5"),
                             Gender = "All",
                             LocationRange = 60,
                             OldestAge = 40,
@@ -695,14 +703,14 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6e255e05-1446-4664-9f9e-3f72568f3c4b"),
+                            Id = new Guid("9e0a9556-0725-4c31-a6d8-4cd200b37df1"),
                             About = "Test Content",
                             GenderId = 1,
                             Job = "Student",
                             Location = "Bullaren",
                             Sexuality = "Bisexual",
-                            UserHobbiesId = new Guid("a6cd577a-ad2b-40b4-a04b-7ba5b1e30131"),
-                            UserPreferencesId = new Guid("3a85de46-687b-4107-bf1a-fd2af381e325")
+                            UserHobbiesId = new Guid("759fc8b5-7a02-4df0-820d-56eda34e269e"),
+                            UserPreferencesId = new Guid("d3e56832-8530-47d3-9f0a-3ee760b7efb5")
                         });
                 });
 
@@ -720,15 +728,21 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.DogFiltersRelationships", "DogFiltersRelationships")
+                    b.HasOne("Entities.DogPersonality", "DogPersonality")
                         .WithMany()
-                        .HasForeignKey("DogFiltersRelationshipsId")
+                        .HasForeignKey("DogPersonalityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.DogPicturesRelationships", "DogPicturesRelationships")
                         .WithMany()
                         .HasForeignKey("DogPicturesRelationshipsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.DogPreferences", "DogPreferences")
+                        .WithMany()
+                        .HasForeignKey("DogPreferencesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -748,20 +762,15 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("DogEnergyLevel");
 
-                    b.Navigation("DogFiltersRelationships");
+                    b.Navigation("DogPersonality");
 
                     b.Navigation("DogPicturesRelationships");
+
+                    b.Navigation("DogPreferences");
 
                     b.Navigation("DogSize");
 
                     b.Navigation("Gender");
-                });
-
-            modelBuilder.Entity("Entities.DogFilters", b =>
-                {
-                    b.HasOne("Entities.DogFiltersRelationships", null)
-                        .WithMany("DogFilters")
-                        .HasForeignKey("DogFiltersRelationshipsId");
                 });
 
             modelBuilder.Entity("Entities.DogPictures", b =>
@@ -816,11 +825,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("UserHobbies");
 
                     b.Navigation("UserPreferences");
-                });
-
-            modelBuilder.Entity("Entities.DogFiltersRelationships", b =>
-                {
-                    b.Navigation("DogFilters");
                 });
 
             modelBuilder.Entity("Entities.DogPicturesRelationships", b =>

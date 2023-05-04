@@ -27,7 +27,7 @@ namespace Dogtrick.Pages
             Allergenic = false,
         };
 
-        public DogFilters Personality = new DogFilters()
+        public DogPersonality Personality = new DogPersonality()
         {
             Id = Guid.NewGuid(),
             AverageWalk = 0,
@@ -39,7 +39,7 @@ namespace Dogtrick.Pages
             Independent = false,
             LaidBack = false
         };
-        public DogFilters Preferences = new DogFilters()
+        public DogPreferences Preferences = new DogPreferences()
         {
             Id = Guid.NewGuid(),
             AverageWalk = 0,
@@ -70,15 +70,6 @@ namespace Dogtrick.Pages
                 DogId = NewDog.DogId
             };
 
-            DogFiltersRelationships dogRelationships = new DogFiltersRelationships() 
-            { 
-                Id = Guid.NewGuid(),
-                DogPersonality = Personality.Id,
-                DogPreferences = Preferences.Id
-            };
-
-            NewDog.DogFiltersRelationshipsId = dogRelationships.Id;
-
             DogPictures dogPictures = new DogPictures()
             {
                 Id = Guid.NewGuid(),
@@ -94,8 +85,10 @@ namespace Dogtrick.Pages
             };
 
             NewDog.DogPicturesRelationshipsId = dogPicturesRelationships.Id;
+            NewDog.DogPersonalityId = Personality.Id;
+            NewDog.DogPreferencesId = Preferences.Id;
 
-            _dogRepository.SaveNewDog(userDogs, Personality, Preferences, NewDog, dogRelationships, dogPictures, dogPicturesRelationships, ParsedMemberId);
+            _dogRepository.SaveNewDog(userDogs, Personality, Preferences, NewDog, dogPictures, dogPicturesRelationships, ParsedMemberId);
 
             _navigationManager.NavigateTo($"/MainProfile/{MemberId}");
         }

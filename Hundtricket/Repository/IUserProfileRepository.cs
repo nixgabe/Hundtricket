@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Infrastructure.Service.ViewModels;
 
 namespace Infrastructure.Repository
 {
@@ -7,5 +8,6 @@ namespace Infrastructure.Repository
         public void AddUserProfile(UserProfile userProfile);
         public Task<UserProfile> GetUserProfileOnMemberId(Guid memberId);
         public void UpdateUserProfile(UserProfile userProfile);
+        public Task<UserFilters> GetUserFilters(Guid? userProfileId);        
     }
 }

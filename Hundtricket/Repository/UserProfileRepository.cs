@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Hundtricket.Context;
+using Infrastructure.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
@@ -58,6 +59,37 @@ namespace Infrastructure.Repository
             originalHobbies.Gymming = userProfile.UserHobbies.Gymming;
 
             context.SaveChanges();
+        }
+
+        public async Task<UserFilters> GetUserFilters(Guid? userProfileId)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+
+            var preferencesId = context.UserProfiles
+                .Where(f => f.Id == userProfileId)
+                .Select(s => s.UserPreferencesId)
+                .FirstOrDefault();
+
+            var hobbiesId = context.UserProfiles
+                .Where(f => f.Id == userProfileId)
+                .Select(s => s.UserHobbiesId)
+                .FirstOrDefault();
+
+            var preferences = context.UserPreferences
+              .Where(f => f.Id == preferencesId)
+              .FirstOrDefault();
+
+            var hobbies = context.UserHobbies
+                .Where(f => f.Id == hobbiesId)
+                .FirstOrDefault();
+
+            var UserFilter = new UserFilters()
+            {
+                UserPreferences = preferences,
+                UserHobbies = hobbies            
+            };
+
+            return UserFilter;
         }
     }
 }

@@ -14,31 +14,63 @@ namespace Infrastructure.Repository
         {
             _dbContextFactory = dbContextFactory;
         }
-        public async Task<DogPreferencesViewModel> GetDogFiltersOnId(Guid dogFiltersRelationshipId)
+        public async Task<DogFilterViewModel> GetDogFiltersOnId(Dog dog)
         {
             var context = _dbContextFactory.CreateDbContext();
 
-            var dogFilters = new DogPreferencesViewModel();
+            var dogFilters = new DogFilterViewModel();
 
-            var personalityId = await context.DogFiltersRelationships.Where(f => f.Id == dogFiltersRelationshipId).Select(s => s.DogPersonality).FirstOrDefaultAsync();
-            var preferencesId = await context.DogFiltersRelationships.Where(f => f.Id == dogFiltersRelationshipId).Select(s => s.DogPreferences).FirstOrDefaultAsync();
+#pragma warning disable CS8601 // Possible null reference assignment.
+            dogFilters.Personality = context.DogPersonality.Where(f => f.Id == dog.DogPersonalityId)
+                .Select(f => new DogPersonalityViewModel()
+                {
+                    WorksWithBoys = f.WorksWithBoys,
+                    WorksWithGirls = f.WorksWithGirls,
+                    Timid = f.Timid,
+                    Confident = f.Confident,
+                    Adaptable = f.Adaptable,
+                    Independent = f.Independent,
+                    LaidBack = f.LaidBack
+                })
+                .FirstOrDefault();
 
-            dogFilters.Personality = await context.DogFilters.Where(f => f.Id == personalityId).FirstOrDefaultAsync();
-            dogFilters.Preferences = await context.DogFilters.Where(f => f.Id == preferencesId).FirstOrDefaultAsync();
+            dogFilters.Preferences = context.DogPreferences.Where(f => f.Id == dog.DogPreferencesId)
+                .Select(f => new DogPreferencesViewModel()
+                {
+                    WorksWithBoys = f.WorksWithBoys,
+                    WorksWithGirls = f.WorksWithGirls,
+                    Timid = f.Timid,
+                    Confident = f.Confident,
+                    Adaptable = f.Adaptable,
+                    Independent = f.Independent,
+                    LaidBack = f.LaidBack
+                })
+                .FirstOrDefault();
+#pragma warning restore CS8601 // Possible null reference assignment.
 
             return dogFilters;
         }
 
-        public async void UpdateDogFilters(DogPreferencesViewModel dogPreferencesViewModel)
+        public async void UpdateDogFilters(DogFilterViewModel dogPreferencesViewModel, Guid dogId)
         {
             var context = _dbContextFactory.CreateDbContext();
 
-            var personalityOriginal = await context.DogFilters.Where(f => f.Id == dogPreferencesViewModel.Personality.Id).FirstOrDefaultAsync();
-            var preferencesOriginal = await context.DogFilters.Where(f => f.Id == dogPreferencesViewModel.Preferences.Id).FirstOrDefaultAsync();
+            var preferencesOriginal = await context.Dogs
+                .Include(s => s.DogPreferences)
+                .Where(f => f.DogId == dogId).Select(f => f.DogPreferences)
+                .FirstOrDefaultAsync();
+
+            var personalityOriginal = await context.Dogs
+                .Include(s => s.DogPersonality)
+                .Where(f => f.DogId == dogId).Select(f => f.DogPersonality)
+                .FirstOrDefaultAsync();
+
+            //var personalityOriginal = await context.DogPersonality.Where(f => f.Id == dogPreferencesViewModel.Personality.Id).FirstOrDefaultAsync();
+            //var preferencesOriginal = await context.DogPreferences.Where(f => f.Id == dogPreferencesViewModel.Preferences.Id).FirstOrDefaultAsync();
 
             personalityOriginal.WorksWithBoys = dogPreferencesViewModel.Personality.WorksWithBoys;
             personalityOriginal.WorksWithGirls = dogPreferencesViewModel.Personality.WorksWithGirls;
-            personalityOriginal.AverageWalk = dogPreferencesViewModel.Personality.AverageWalk;
+            //personalityOriginal.AverageWalk = dogPreferencesViewModel.Personality.AverageWalk;
             personalityOriginal.Timid = dogPreferencesViewModel.Personality.Timid;
             personalityOriginal.Confident = dogPreferencesViewModel.Personality.Confident;
             personalityOriginal.Adaptable = dogPreferencesViewModel.Personality.Adaptable;
@@ -47,7 +79,7 @@ namespace Infrastructure.Repository
 
             preferencesOriginal.WorksWithBoys = dogPreferencesViewModel.Preferences.WorksWithBoys;
             preferencesOriginal.WorksWithGirls = dogPreferencesViewModel.Preferences.WorksWithGirls;
-            preferencesOriginal.AverageWalk = dogPreferencesViewModel.Preferences.AverageWalk;
+            //preferencesOriginal.AverageWalk = dogPreferencesViewModel.Preferences.AverageWalk;
             preferencesOriginal.Timid = dogPreferencesViewModel.Preferences.Timid;
             preferencesOriginal.Confident = dogPreferencesViewModel.Preferences.Confident;
             preferencesOriginal.Adaptable = dogPreferencesViewModel.Preferences.Adaptable;
@@ -56,5 +88,6 @@ namespace Infrastructure.Repository
 
             context.SaveChanges();
         }
+
     }
 }
