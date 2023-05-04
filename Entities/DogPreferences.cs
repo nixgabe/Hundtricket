@@ -1,6 +1,6 @@
 ﻿namespace Entities
 {
-    public class DogFilters
+    public class DogPreferences
     {
         public Guid Id { get; set; }
         public bool WorksWithBoys { get; set; }

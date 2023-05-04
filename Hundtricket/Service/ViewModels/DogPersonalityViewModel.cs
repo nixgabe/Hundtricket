@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Service.ViewModels
 {
-    public class DogPreferencesViewModel
+    public class DogPersonalityViewModel
     {
         public bool WorksWithBoys { get; set; }
         public bool WorksWithGirls { get; set; }        

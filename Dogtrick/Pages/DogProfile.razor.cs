@@ -19,7 +19,7 @@ namespace Dogtrick.Pages
         public string DogId { get; set; }
         private Guid ParsedDogId { get; set; }
         public Dog Dog { get; set; }
-        public DogPreferencesViewModel DogPreferences { get; set; }
+        public DogFilterViewModel DogPreferences { get; set; }
         public AddDogViewModel DogViewModel { get; set; }
 
         public bool EditDog = false;
@@ -29,7 +29,7 @@ namespace Dogtrick.Pages
         {
             ParsedDogId = Guid.Parse(DogId);
             Dog = await _dogRepository.GetDogOnId(ParsedDogId);
-            DogPreferences = await _dogFiltersRepository.GetDogFiltersOnId(Dog.DogFiltersRelationshipsId);
+            DogPreferences = await _dogFiltersRepository.GetDogFiltersOnId(Dog);
             DogViewModel = await _dogRepository.FillAddDogviewModelLists();
         }
 
@@ -41,7 +41,7 @@ namespace Dogtrick.Pages
         public async void SaveDogChangesButton()
         {
             _dogRepository.UpdateDog(Dog);
-            _dogFiltersRepository.UpdateDogFilters(DogPreferences);
+            _dogFiltersRepository.UpdateDogFilters(DogPreferences, ParsedDogId);
 
             EditDog = false;            
         }

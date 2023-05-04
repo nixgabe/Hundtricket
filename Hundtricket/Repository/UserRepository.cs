@@ -29,7 +29,6 @@ namespace Infrastructure.Repository
             context.Users.Add(newMember);
             context.SaveChanges();
         }
-
         
         public async Task<string> GetMemberEmail(Guid memberId)
         {
