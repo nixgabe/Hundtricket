@@ -13,6 +13,7 @@ else
 {
 
     <p>Pick a dog to filter on</p>
+    <p>Don't worry! After you filter on one of your pups, your own preferences will also be applied!</p>
     <select @bind="@DogName" style="width:250px;">
         <option value="null"></option>
         @foreach (var dog in UserDogFilters)
@@ -23,9 +24,10 @@ else
     <MudButtonGroup Color="Color.Secondary" Size="Size.Medium" Variant="Variant.Outlined">
         <MudButton @onclick="() => FilterOnDog()">Filter</MudButton>
     </MudButtonGroup>
+    
 
 
-    @if(FilteredDogs.Count() == 0)
+    @if (FilteredList.Count() == 0)
     {
         <p>Looks like there's no dogs in the park right now!</p>        
     }
@@ -54,7 +56,7 @@ else
             </div>
         </NextButtonTemplate>
         <ChildContent>
-            @foreach (var dog in FilteredDogs)
+            @foreach (var dog in FilteredList)
             {
                 <MudCarouselItem Color="@Color.Primary">
                     <MudCard>

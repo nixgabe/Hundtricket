@@ -23,12 +23,12 @@ else
     <h3>Profile</h3>
 
     <p>Gender</p>
-    <select @bind="@UserProfile.GenderId">
+@*    <select @bind="@UserProfile.GenderId">
         @foreach (var gender in Genders)
         {
             <option value="@gender.Id">@gender.GenderOption</option>
         }
-    </select>
+    </select>*@
     <p>Sexuality</p>
     <InputText @bind-Value="UserProfile.Sexuality"></InputText>
     <p>Job</p>

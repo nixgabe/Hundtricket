@@ -61,22 +61,28 @@ namespace Infrastructure.Repository
             context.SaveChanges();
         }
 
-        public async Task<UserFilters> GetUserFilters(Guid? userProfileId)
+        public async Task<UserFilters> GetUserFilters(User user)
         {
             var context = _dbContextFactory.CreateDbContext();
 
             var preferencesId = context.UserProfiles
-                .Where(f => f.Id == userProfileId)
+                .Where(f => f.Id == user.UserProfileId)
                 .Select(s => s.UserPreferencesId)
                 .FirstOrDefault();
 
             var hobbiesId = context.UserProfiles
-                .Where(f => f.Id == userProfileId)
+                .Where(f => f.Id == user.UserProfileId)
                 .Select(s => s.UserHobbiesId)
                 .FirstOrDefault();
 
             var preferences = context.UserPreferences
               .Where(f => f.Id == preferencesId)
+              .Select(s => new UserPreferencesViewModel()
+              {
+                  Gender = s.Gender,
+                  YoungestAge = s.YoungestAge,
+                  OldestAge = s.OldestAge
+              })
               .FirstOrDefault();
 
             var hobbies = context.UserHobbies
@@ -85,11 +91,41 @@ namespace Infrastructure.Repository
 
             var UserFilter = new UserFilters()
             {
+                UserAge = user.Age,
                 UserPreferences = preferences,
                 UserHobbies = hobbies            
             };
 
             return UserFilter;
+        }
+
+        public async Task<List<UserPreferencesViewModel>> GetAllUserFilters()
+        {
+            var context = _dbContextFactory.CreateDbContext();
+            var list = context.UserPreferences
+            .Select(s => new UserPreferencesViewModel()
+            {
+                FilterId = s.Id,
+                Gender = s.Gender,
+                YoungestAge = s.YoungestAge,
+                OldestAge = s.OldestAge
+            })
+            .ToList();
+
+            var users = context.Users
+                .Include(f => f.UserProfile)
+                .Select(s => new User()
+                {
+                    Id = s.Id,
+                    UserProfile = s.UserProfile
+                }).ToList();
+
+            foreach (var filter in list)
+            {
+                filter.UserId = users.Where(f => f.UserProfile.UserPreferencesId == filter.FilterId).Select(s => s.Id).FirstOrDefault();
+            }
+
+            return list;
         }
     }
 }

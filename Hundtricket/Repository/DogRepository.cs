@@ -158,6 +158,7 @@ namespace Infrastructure.Repository
         public async Task<List<DogProfileViewModel>> GetAllDogsExceptUsers(Guid? userDogRelationshipsId)
         {
             var context = _dbContextFactory.CreateDbContext();
+            var availableProfiles = new List<AvailableProfilesViewModel>();
             var dogList = new List<DogProfileViewModel>();
 
             var relationshipsId = context.UserDogRelationships
@@ -167,6 +168,15 @@ namespace Infrastructure.Repository
             var ownerId = context.UserDogs
                 .Where(f => f.Id == relationshipsId)
                 .Select(s => s.UsersDogId).FirstOrDefault();
+
+            var userRelationships = context.UserDogs
+                .Where(f => f.UsersDogId != ownerId)
+                .Select(s => new UserDogs()
+                {
+                    UsersDogId = s.UsersDogId,
+                    DogId = s.DogId,
+                }
+                ).ToList();
 
             var userDogIdList = context.UserDogs
                 .Where(f => f.UsersDogId == ownerId)
@@ -189,8 +199,16 @@ namespace Infrastructure.Repository
                     DogEnergyLevel = dog.DogEnergyLevel.EnergyLevel,
                     DogSize = dog.DogSize.Size,
                     Preferences = dog.DogPreferences,
-                    Personality = dog.DogPersonality
+                    Personality = dog.DogPersonality,
+                    //This one messes it up because it's the signed in users id, and not the id of the actual owner
+                    //OwnerId = ownerId
                 }).Where(f => !userDogIdList.Contains(f.Id)).ToList();
+
+            //Can be done nicer
+            foreach(var dog in dogList)
+            {
+                dog.OwnerId = userRelationships.Where(f => f.DogId == dog.Id).Select(f => f.UsersDogId).FirstOrDefault();
+            }
 
             return dogList;
         }
