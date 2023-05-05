@@ -16,5 +16,6 @@ namespace Infrastructure.Service.ViewModels
         public Guid FiltersId { get; set; } 
         public DogPersonality Personality { get; set; }
         public DogPreferences Preferences { get; set; }
+        public Guid OwnerId { get; set; }
     }
 }

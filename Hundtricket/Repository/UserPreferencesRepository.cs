@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Hundtricket.Context;
+using Infrastructure.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
@@ -20,5 +21,7 @@ namespace Infrastructure.Repository
             context.UserPreferences.Add(userPrefernces);
             context.SaveChanges();
         }
+
+        
     }
 }

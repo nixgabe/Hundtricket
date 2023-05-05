@@ -21,36 +21,37 @@ namespace Dogtrick.Pages
         public string MemberId { get; set; }
         private Guid ParsedMemberId { get; set; }
         public User User { get; set; }
-        List<DogProfileViewModel> Dogs { get; set; }
-        List<DogProfileViewModel> FilteredDogs { get; set; }
+        List<DogProfileViewModel> AvailableProfiles { get; set; }
+        List<DogProfileViewModel> FilteredList { get; set; }
         UserFilters UserFilters { get; set; }
+        List<UserPreferencesViewModel> AllUserFilters { get; set; }
+        List<UserPreferencesViewModel> RemainingUsersFilters { get; set; }
         List<DogFilterViewModel> UserDogFilters { get; set; }
         public string DogName { get; set; }
-
-        //What I need, user and their preferences which I should get from just User profile. And the preferences of their dog
-        //Going to implement just one dog as of now, seeing two dogs is a tad bit more complicated, it can be added in later. Maybe do it so it is filtered per dog??
 
         protected override async Task OnInitializedAsync()
         {
             ParsedMemberId = Guid.Parse(MemberId);
             User = await _userRepository.GetMemberOnId(ParsedMemberId);
             UserDogFilters = await _dogRepository.GetDogFiltersId(User.Id);
-            Dogs = await _dogRepository.GetAllDogsExceptUsers(User.UserDogRelationshipsId);
-            UserFilters = await _profileRepository.GetUserFilters(User.UserProfileId);
-            FilteredDogs = Dogs;
+            AvailableProfiles = await _dogRepository.GetAllDogsExceptUsers(User.UserDogRelationshipsId);
+            AllUserFilters = await _profileRepository.GetAllUserFilters();
+            UserFilters = await _profileRepository.GetUserFilters(User);
+            
             InitialFilter();
         }
 
         public void InitialFilter()
         {
-            //FilteredDogs = Dogs.Where(filter => filter.Personality == UserDogFilters.Preferences).ToList();
+            FilteredList = AvailableProfiles;
         }
 
+        //Can definitely be done prettier
         public void FilterOnDog()
         {
             if(DogName == null || DogName == "null")
             {
-                FilteredDogs = Dogs;
+                FilteredList = AvailableProfiles;
                 return;
             }
 
@@ -58,14 +59,26 @@ namespace Dogtrick.Pages
             {
                 if (dog.DogName == DogName)
                 {
-                    FilteredDogs = Dogs.Where(filter => filter.Personality.WorksWithBoys == dog.Preferences.WorksWithBoys &&
+                    FilteredList = AvailableProfiles.Where(filter => filter.Personality.WorksWithBoys == dog.Preferences.WorksWithBoys &&
                      filter.Personality.WorksWithGirls == dog.Preferences.WorksWithGirls && filter.Personality.Timid == dog.Preferences.Timid &&
                      filter.Personality.Confident == dog.Preferences.Confident && filter.Personality.Adaptable == dog.Preferences.Adaptable &&
                      filter.Personality.Independent == dog.Preferences.Independent && filter.Personality.LaidBack == dog.Preferences.LaidBack
                     ).ToList();
+
+                    var ownerIds = FilteredList.Select(s => s.OwnerId).ToList();
+
+                    RemainingUsersFilters = AllUserFilters.Where(filter => ownerIds.Contains(filter.UserId) && filter.Gender == UserFilters.UserPreferences.Gender
+                    && filter.YoungestAge <= UserFilters.UserAge && filter.OldestAge >= UserFilters.UserAge)                        
+                        .ToList();
+
+                    ownerIds = RemainingUsersFilters.Select(f => f.UserId).ToList();
+
+                    FilteredList = FilteredList.Where(filter => ownerIds.Contains(filter.OwnerId))
+                        .ToList();
+
                     break;
                 }
             }            
-        }
+        }        
     }
 }
