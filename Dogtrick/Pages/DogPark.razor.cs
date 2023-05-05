@@ -16,6 +16,8 @@ namespace Dogtrick.Pages
         public IUserProfileRepository _profileRepository { get; set; }
         [Inject]
         public IDogFiltersRepository _filtersRepository { get; set; }
+        [Inject]
+        public NavigationManager _navigationManager { get; set; }
 
         [Parameter]
         public string MemberId { get; set; }
@@ -79,6 +81,12 @@ namespace Dogtrick.Pages
                     break;
                 }
             }            
-        }        
+        }
+        
+        public void ViewMemberProfile(Guid profileId)
+        {
+            string dogId = profileId.ToString();
+            _navigationManager.NavigateTo($"/ViewUserProfile/{dogId}");
+        }
     }
 }
