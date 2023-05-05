@@ -259,5 +259,12 @@ namespace Infrastructure.Repository
 
             return dogPreferencesViewModelList;
         }
+
+        public async Task<Guid> GetOwnerIdToDog(Guid dogId)
+        {
+            var context = _dbContextFactory.CreateDbContext();
+
+            return context.UserDogs.Where(f => f.DogId == dogId).Select(s => s.UsersDogId).FirstOrDefault();
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Infrastructure.Repository
         public void UpdateDog(Dog updatedDog);
         public Task<Dog> GetDogOnId(Guid dogId);
         public Task<List<DogProfileViewModel>> GetAllDogsExceptUsers(Guid? userDogRelationshipsId);
-        public Task<List<DogFilterViewModel>> GetDogFiltersId(Guid userId);        
+        public Task<List<DogFilterViewModel>> GetDogFiltersId(Guid userId);
+        public Task<Guid> GetOwnerIdToDog(Guid dogId);
     }
 }
