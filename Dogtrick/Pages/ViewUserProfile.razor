@@ -18,9 +18,9 @@ else
             <MudText Typo="Typo.body2">Blah blah blah text</MudText>
         </MudCardContent>
         @*<MudCardActions>
-    <MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="NavigateToPrivateMessage">Message</MudButton>
     <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-    </MudCardActions>*@
+        </MudCardActions>*@
     </MudCard>
     <MudCard>
         <MudCardMedia Image="images/door.jpg" Height="200" />
@@ -28,9 +28,10 @@ else
             <MudText Typo="Typo.h5">@Profile.FirstName @Profile.LastName</MudText>
             <MudText Typo="Typo.body2">Blah blah blah text</MudText>
         </MudCardContent>
-        @*<MudCardActions>
-    <MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>
-    <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-    </MudCardActions>*@
+        <MudCardActions>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="NavigateToPrivateMessage">Message</MudButton>
+            @*<MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>*@
+        </MudCardActions>
     </MudCard>
 }

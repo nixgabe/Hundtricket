@@ -148,6 +148,7 @@ namespace Hundtricket.Context
                 .HasData(
                 new Gender { Id = 1, GenderOption = "Male"},
                 new Gender { Id = 2, GenderOption = "Female" });            
+
         }
 
         public DbSet<Dog> Dogs { get; set; }
@@ -164,6 +165,6 @@ namespace Hundtricket.Context
         public DbSet<UserPreferences> UserPreferences { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserDogs> UserDogs { get; set; }
-        public DbSet<Gender> Genders { get; set; }
+        public DbSet<Gender> Genders { get; set; }        
     }
 }

@@ -1,0 +1,15 @@
+﻿body {
+}
+
+
+.ReceivingMessage {
+    margin-left: auto;
+}
+
+.SendingMessage {
+    margin-right: auto;
+}
+
+.Scrollable {
+    overflow-anchor: auto;
+}

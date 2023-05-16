@@ -1,5 +1,6 @@
 using Dogtrick.Areas.Identity;
-//using Dogtrick.Data;
+using Microsoft.AspNetCore.ResponseCompression;
+using Dogtrick.Hubs;
 using Hundtricket.Context;
 using Infrastructure.Repository;
 using Infrastructure.Service;
@@ -22,6 +23,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
+
 builder.Services.AddSingleton<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
 builder.Services.AddScoped<IDogRepository, DogRepository>();
@@ -32,7 +39,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IUserPreferencesRepository, UserPreferencesRepository>();
 
+
 builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 builder.Services.AddDbContext<HundtricketContext>();
 
@@ -51,6 +60,8 @@ else
     app.UseHsts();
 }
 
+app.UseResponseCompression();
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -61,6 +72,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapBlazorHub();
+app.MapHub<ChatHub>("chathub");
 app.MapFallbackToPage("/_Host");
 
 app.Run();
