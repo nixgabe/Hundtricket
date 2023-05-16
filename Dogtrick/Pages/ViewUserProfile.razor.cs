@@ -12,7 +12,6 @@ namespace Dogtrick.Pages
         [Inject]
         public NavigationManager _navigationManager { get; set; }
 
-
         [Parameter]
         public string DogId { get; set; }
         private Guid ParsedDogId { get; set; }
@@ -20,7 +19,7 @@ namespace Dogtrick.Pages
         protected override async Task OnInitializedAsync()
         {
             ParsedDogId = Guid.Parse(DogId);
-            _viewUserProfileOverview.GatherAllInfo(ParsedDogId);            
+            await _viewUserProfileOverview.GatherAllInfo(ParsedDogId);            
         }
 
         public void NavigateToPrivateMessage()

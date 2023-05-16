@@ -44,6 +44,7 @@ builder.Services.AddScoped<IAddDogOverview, AddDogOverview>();
 builder.Services.AddScoped<IDogParkOverview, DogParkOverview>();
 builder.Services.AddScoped<IDogProfileOverview, DogProfileOverview>();
 builder.Services.AddScoped<IEditProfileOverview, EditProfileOverview>();
+builder.Services.AddScoped<IPrivateMessageOverview, PrivateMessageOverview>();
 builder.Services.AddScoped<IViewUserProfileOverview, ViewUserProfileOverview>();
 
 builder.Services.AddScoped<IMemberService, MemberService>();

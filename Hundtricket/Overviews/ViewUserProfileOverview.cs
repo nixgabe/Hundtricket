@@ -18,9 +18,9 @@ namespace Infrastructure.Overviews
         public User Profile { get; set; }
         public Dog DogProfile { get; set; }
 
-        public async void GatherAllInfo(Guid dogId)
+        public async Task GatherAllInfo(Guid dogId)
         {
-            DogProfile = await _dogRepository.GetDogOnId(dogId);
+            DogProfile =  await _dogRepository.GetDogOnId(dogId);
             var ownerId = await _dogRepository.GetOwnerIdToDog(dogId);
             Profile = await _userRepository.GetMemberOnId(ownerId);
         }

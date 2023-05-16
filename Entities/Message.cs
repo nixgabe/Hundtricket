@@ -6,5 +6,6 @@
         public string FromUserId { get; set; }
         public string MessageText { get; set; }
         public DateTime TimeStamp { get; set; }
+        public Guid ConversationId { get; set; }
     }
 }

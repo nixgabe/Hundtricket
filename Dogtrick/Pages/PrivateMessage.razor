@@ -11,11 +11,7 @@
 
 <MudGrid>
     <MudItem xs="12" sm="6" md="4">
-        <MudPaper>
-            <MudTextField T="string" Label="Username" Required="true" @bind-Value="@userInput"></MudTextField>
-            <MudTextField T="string" Label="Message" Required="true" @bind-Value="@messageInput"></MudTextField>
-        </MudPaper>
-        <MudButton Variant="Variant.Filled" @onclick="Send">Send</MudButton>
+        <MudButton Variant="Variant.Filled" @onclick="ReportConversation">Report conversation</MudButton>
     </MudItem>
 </MudGrid>
 <MudGrid Style=" height:500px">
@@ -44,7 +40,9 @@
                         </p>
                     }                    
                 }
-            </MudList>
+            </MudList>            
         </MudPaper>
+        <MudTextField T="string" Label="Message" Required="true" @bind-Value="@messageInput"></MudTextField>
+        <MudButton Variant="Variant.Filled" @onclick="Send">Send</MudButton>
     </MudItem>
 </MudGrid>
