@@ -4,7 +4,7 @@
 
 <h3>ViewUserProfile</h3>
 
-@if (DogProfile == null)
+@if (_viewUserProfileOverview.DogProfile == null)
 {
     <p>Loading...</p>
 }
@@ -14,24 +14,18 @@ else
     <MudCard>
         <MudCardMedia Image="images/door.jpg" Height="200" />
         <MudCardContent>
-            <MudText Typo="Typo.h5">@DogProfile.Name</MudText>
+            <MudText Typo="Typo.h5">@_viewUserProfileOverview.DogProfile.Name</MudText>
             <MudText Typo="Typo.body2">Blah blah blah text</MudText>
         </MudCardContent>
-        @*<MudCardActions>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="NavigateToPrivateMessage">Message</MudButton>
-    <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-        </MudCardActions>*@
     </MudCard>
     <MudCard>
         <MudCardMedia Image="images/door.jpg" Height="200" />
         <MudCardContent>
-            <MudText Typo="Typo.h5">@Profile.FirstName @Profile.LastName</MudText>
+            <MudText Typo="Typo.h5">@_viewUserProfileOverview.Profile.FirstName @_viewUserProfileOverview.Profile.LastName</MudText>
             <MudText Typo="Typo.body2">Blah blah blah text</MudText>
         </MudCardContent>
         <MudCardActions>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="NavigateToPrivateMessage">Message</MudButton>
-            @*<MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>
-        <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>*@
+            <MudButton Variant="Variant.Text" Color="Color.Primary" @onclick="NavigateToPrivateMessage">Message</MudButton>         
         </MudCardActions>
     </MudCard>
 }

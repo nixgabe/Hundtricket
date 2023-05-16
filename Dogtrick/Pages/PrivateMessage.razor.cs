@@ -34,20 +34,16 @@ namespace Dogtrick.Pages
             User = await _userRepository.GetMemberOnId(ParsedUserId);
             MemberId = _messageService.MemberId;
 
-            //AllPrivateDmMessages = _messageService.GetChatMessages();
-
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
             hubConnection = new HubConnectionBuilder()
             .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
             .Build();
 
-            //This one does not, it still shows all
             hubConnection.On<Message>("ReceiveMessage", (message) =>
             {
                 PrivateDmMessages = _messageService.SendMessage(message);
                 PrivateDmMessages = _messageService.GetCurrentConversation(message.ToUserId, message.FromUserId);
-                //PrivateDmMessages = _messageService.GetCurrentConversation(message);
                 InvokeAsync(StateHasChanged);
             });
 
@@ -55,7 +51,6 @@ namespace Dogtrick.Pages
             messageInput = "";
         }
 
-        //This one works
         private async Task Send()
         {
             var userId = User.Id.ToString();
@@ -72,8 +67,8 @@ namespace Dogtrick.Pages
             }
 
             messageInput = "";
-            //PrivateDmMessages = _messageService.GetCurrentConversation(message);
         }
+
         public bool IsConnected =>
             hubConnection?.State == HubConnectionState.Connected;
 

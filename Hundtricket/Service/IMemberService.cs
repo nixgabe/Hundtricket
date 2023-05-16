@@ -11,5 +11,9 @@ namespace Infrastructure.Service
         public List<Message> SendMessage(Message message);
 
         public List<Message> GetChatMessages();
+
+        public void MemberHasSignedIn();
+
+        public bool IsMemberSignedIn { get; set; }
     }
 }

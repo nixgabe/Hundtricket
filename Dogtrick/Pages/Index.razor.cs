@@ -5,7 +5,6 @@ using Infrastructure.Service.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Identity.Client;
 
 namespace Dogtrick.Pages
 {
@@ -34,16 +33,12 @@ namespace Dogtrick.Pages
         {
             MessagesList = _memberService.GetChatMessages();
 
-
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
             hubConnection = new HubConnectionBuilder()
             .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
             .Build();
 
             hubConnection.On<Message>("ReceiveMessage", (message) =>
             {
-                //var encodedMsg = $"{user}: {message}";
                 MessagesList = _memberService.SendMessage(message);
                 InvokeAsync(StateHasChanged);
             });
@@ -54,13 +49,11 @@ namespace Dogtrick.Pages
 
         private async Task Send()
         {
-            //var userId = User.Id.ToString();
-
-
+            
             Message message = new Message();
-            //message.ToUserId = ToUserID;
-            //message.FromUserId = userId;
             message.MessageText = messageInput;
+            message.TimeStamp = DateTime.Now;
+            message.FromUserId = _memberService.MemberId;
 
             if (hubConnection is not null)
             {

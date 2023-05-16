@@ -2,7 +2,7 @@
 
 <h3>Edit Profile</h3>
 
-@if (UserProfile == null)
+@if (_editProfileOverview.UserProfile == null)
 {
     <p>Loading...</p>
 }
@@ -12,13 +12,13 @@ else
     <h3>User</h3>
     
     <p>First name</p>
-    <InputText @bind-Value="@User.FirstName"></InputText>
+    <InputText @bind-Value="@_editProfileOverview.User.FirstName"></InputText>
     <p>Last name</p>
-    <InputText @bind-Value="@User.LastName"></InputText>
+    <InputText @bind-Value="@_editProfileOverview.User.LastName"></InputText>
     <p>Email</p>
-    <p>@User.Email</p>
+    <p>@_editProfileOverview.User.Email</p>
     <p>Age</p>
-    <InputNumber @bind-Value="@User.Age"></InputNumber>
+    <InputNumber @bind-Value="@_editProfileOverview.User.Age"></InputNumber>
 
     <h3>Profile</h3>
 
@@ -30,39 +30,39 @@ else
         }
     </select>*@
     <p>Sexuality</p>
-    <InputText @bind-Value="UserProfile.Sexuality"></InputText>
+    <InputText @bind-Value="_editProfileOverview.UserProfile.Sexuality"></InputText>
     <p>Job</p>
-    <InputText @bind-Value="UserProfile.Job"></InputText>
+    <InputText @bind-Value="_editProfileOverview.UserProfile.Job"></InputText>
     <p>Location</p>
-    <InputText @bind-Value="UserProfile.Location"></InputText> 
+    <InputText @bind-Value="_editProfileOverview.UserProfile.Location"></InputText>
     <p>About</p>
-    <InputText @bind-Value="UserProfile.About"></InputText>
+    <InputText @bind-Value="_editProfileOverview.UserProfile.About"></InputText>
 
 
     <h3>Preferences</h3>
 
     <p>Gender</p>
-    <select @bind="@UserProfile.UserPreferences.Gender">
-        @foreach (var gender in Genders)
+    <select @bind="@_editProfileOverview.UserProfile.UserPreferences.Gender">
+        @foreach (var gender in _editProfileOverview.Genders)
         {
             <option value="@gender.GenderOption">@gender.GenderOption</option>
         }
     </select>    
     <p>Range</p>
-    <InputNumber @bind-Value="UserProfile.UserPreferences.LocationRange"></InputNumber>
+    <InputNumber @bind-Value="_editProfileOverview.UserProfile.UserPreferences.LocationRange"></InputNumber>
     <p>Youngest age</p>
-    <InputNumber @bind-Value="UserProfile.UserPreferences.YoungestAge"></InputNumber>
+    <InputNumber @bind-Value="_editProfileOverview.UserProfile.UserPreferences.YoungestAge"></InputNumber>
     <p>Oldest age</p>
-    <InputNumber @bind-Value="UserProfile.UserPreferences.OldestAge"></InputNumber>
+    <InputNumber @bind-Value="_editProfileOverview.UserProfile.UserPreferences.OldestAge"></InputNumber>
 
     <h3>Hobbies</h3>
-    <p>Nature <InputCheckbox @bind-Value="UserProfile.UserHobbies.Nature"></InputCheckbox> </p>
-    <p>Hiking <InputCheckbox @bind-Value="UserProfile.UserHobbies.Hiking"></InputCheckbox> </p>
-    <p>Swimming <InputCheckbox @bind-Value="UserProfile.UserHobbies.Swimming"></InputCheckbox> </p>
-    <p>Music <InputCheckbox @bind-Value="UserProfile.UserHobbies.Music"></InputCheckbox> </p>
-    <p>Gaming <InputCheckbox @bind-Value="UserProfile.UserHobbies.Gaming"></InputCheckbox> </p>
-    <p>Movies <InputCheckbox @bind-Value="UserProfile.UserHobbies.Movies"></InputCheckbox> </p>
-    <p>Gymming <InputCheckbox @bind-Value="UserProfile.UserHobbies.Gymming"></InputCheckbox> </p>
+    <p>Nature <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Nature"></InputCheckbox> </p>
+    <p>Hiking <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Hiking"></InputCheckbox> </p>
+    <p>Swimming <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Swimming"></InputCheckbox> </p>
+    <p>Music <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Music"></InputCheckbox> </p>
+    <p>Gaming <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Gaming"></InputCheckbox> </p>
+    <p>Movies <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Movies"></InputCheckbox> </p>
+    <p>Gymming <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Gymming"></InputCheckbox> </p>
 
     <button @onclick="() => SaveChanges()">Save Changes</button>
 }

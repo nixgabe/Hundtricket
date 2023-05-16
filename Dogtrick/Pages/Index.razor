@@ -4,29 +4,31 @@
 @implements IAsyncDisposable
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-<PageTitle>Index</PageTitle>
+<PageTitle>DogTrick</PageTitle>
 <hr>
 
-<MudGrid>
-    <MudItem xs="12" sm="6" md="4">
-        <MudPaper>
-            <MudTextField T="string" Label="Username" Required="true" @bind-Value="@userInput"></MudTextField>
-            <MudTextField T="string" Label="Message" Required="true" @bind-Value="@messageInput"></MudTextField>
-        </MudPaper>
-        <MudButton Variant="Variant.Filled" @onclick="Send">Send</MudButton>
-    </MudItem>    
-</MudGrid>
-<MudGrid Style=" height:500px">
-    <MudItem xs="12" md="6">
-        <MudPaper Width="100%">
-            <MudList>
-                @foreach (var message in MessagesList)
-                {
-                    
-                    <hr />
-                    <MudListItem Text="@message.MessageText"></MudListItem>                    
-                }
-            </MudList>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+
+@if (_memberService.IsMemberSignedIn == true)
+{
+    <MudGrid Style=" height:500px">
+        <MudItem xs="12" md="6">
+            <MudPaper Width="100%" Style="@($"background:{Colors.Green.Lighten4}")">
+                <MudList>
+                    @foreach (var message in MessagesList)
+                    {
+
+                        <hr />
+                        <MudListItem Text="@message.MessageText"></MudListItem>
+                    }
+                </MudList>
+                <MudTextField T="string" Label="Message" Required="true" @bind-Value="@messageInput"></MudTextField>
+            </MudPaper>
+            <MudButton Variant="Variant.Filled" @onclick="Send">Send</MudButton>
+        </MudItem>
+    </MudGrid>
+}
+
+else{
+    <PageTitle>DogTrick</PageTitle>
+    <p>Blah blah blah text about it all. How it works, potential for pretty art work or cute puppy pics</p>
+}

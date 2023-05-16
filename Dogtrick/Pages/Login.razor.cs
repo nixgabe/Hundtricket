@@ -47,6 +47,7 @@ namespace Dogtrick.Pages
             _memberService.SetMemberId(member.Id);
 
             var memberId = member.Id.ToString();
+            _memberService.MemberHasSignedIn();
             NavigationManager.NavigateTo($"/Home/{memberId}");
         }
     }

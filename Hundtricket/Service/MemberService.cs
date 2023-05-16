@@ -7,6 +7,7 @@ namespace Infrastructure.Service
         public string MemberId { get; set; }
 
         public List<Message> ChatMessages = new List<Message>();
+        public bool IsMemberSignedIn { get; set; } = false;
 
         public void SetMemberId(Guid memberId)
         {
@@ -23,6 +24,11 @@ namespace Infrastructure.Service
         public List<Message> GetChatMessages()
         {
             return ChatMessages;
+        }
+
+        public void MemberHasSignedIn()
+        {
+            IsMemberSignedIn = true;
         }
     }
 }
