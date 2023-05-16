@@ -1,39 +1,40 @@
 ﻿using Entities;
 using Infrastructure.Repository;
 using Infrastructure.Service;
-using Infrastructure.Service.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Dogtrick.Pages
 {
-    partial class Index
+    public partial class PrivateMessage
     {
-        public List<DogViewModel> Dogs { get; set; }
-
-        public User User { get; set; }
-        [Inject]
-        public IDogRepository _dogRepository { get; set; }
-        [Inject]
-        public IDogPicturesRepository _dogPicturesRepository { get; set; }
         [Inject]
         public IUserRepository _userRepository { get; set; }
         [Inject]
-        public IMemberService _memberService { get; set; }
+        public IMessageService _messageService { get; set; }
 
-        private HubConnection? hubConnection;
-        public List<string> messages = new List<string>();
-        public List<Message> MessagesList { get; set; } 
+        //Who we send to
+        [Parameter]
+        public string UserId { get; set; }
+        private Guid ParsedUserId { get; set; }
+        public User User { get; set; }
+        public string MemberId { get; set; }
+        public List<Message> AllPrivateDmMessages { get; set; }
+        public List<Message> PrivateDmMessages = new List<Message>();
+
         public string? userInput;
         public string? messageInput;
-
+        private HubConnection hubConnection;
 
         protected override async Task OnInitializedAsync()
         {
-            MessagesList = _memberService.GetChatMessages();
+            ParsedUserId = Guid.Parse(UserId);
+            User = await _userRepository.GetMemberOnId(ParsedUserId);
+            MemberId = _messageService.MemberId;
 
+            //AllPrivateDmMessages = _messageService.GetChatMessages();
 
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
@@ -41,10 +42,12 @@ namespace Dogtrick.Pages
             .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
             .Build();
 
+            //This one does not, it still shows all
             hubConnection.On<Message>("ReceiveMessage", (message) =>
             {
-                //var encodedMsg = $"{user}: {message}";
-                MessagesList = _memberService.SendMessage(message);
+                PrivateDmMessages = _messageService.SendMessage(message);
+                PrivateDmMessages = _messageService.GetCurrentConversation(message.ToUserId, message.FromUserId);
+                //PrivateDmMessages = _messageService.GetCurrentConversation(message);
                 InvokeAsync(StateHasChanged);
             });
 
@@ -52,15 +55,16 @@ namespace Dogtrick.Pages
             messageInput = "";
         }
 
+        //This one works
         private async Task Send()
         {
-            //var userId = User.Id.ToString();
-
+            var userId = User.Id.ToString();
 
             Message message = new Message();
-            //message.ToUserId = ToUserID;
-            //message.FromUserId = userId;
+            message.ToUserId = userId;
+            message.FromUserId = MemberId;
             message.MessageText = messageInput;
+            message.TimeStamp = DateTime.Now;
 
             if (hubConnection is not null)
             {
@@ -68,8 +72,8 @@ namespace Dogtrick.Pages
             }
 
             messageInput = "";
+            //PrivateDmMessages = _messageService.GetCurrentConversation(message);
         }
-
         public bool IsConnected =>
             hubConnection?.State == HubConnectionState.Connected;
 
@@ -80,5 +84,6 @@ namespace Dogtrick.Pages
                 await hubConnection.DisposeAsync();
             }
         }
+
     }
 }

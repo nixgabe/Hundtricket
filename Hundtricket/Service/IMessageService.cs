@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Service
 {
-    public interface IMemberService 
+    public interface IMessageService 
     {
         public string MemberId { get; set; }
 
@@ -11,5 +11,9 @@ namespace Infrastructure.Service
         public List<Message> SendMessage(Message message);
 
         public List<Message> GetChatMessages();
+
+        public List<Message> GetCurrentConversation(Message message);
+
+        public List<Message> GetCurrentConversation(string recipientId, string senderId);
     }
 }

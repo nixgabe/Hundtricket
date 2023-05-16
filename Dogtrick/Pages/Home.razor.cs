@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Repository;
+using Infrastructure.Service;
 using Microsoft.AspNetCore.Components;
 
 namespace Dogtrick.Pages
@@ -9,6 +10,8 @@ namespace Dogtrick.Pages
         NavigationManager NavigationManager { get; set; }
         [Inject]
         IUserRepository _userRepository { get; set; }
+        [Inject]
+        IMessageService _messageService { get; set; }
         [Parameter]
         public string MemberId { get; set; }
         public string MemberEmail { get; set; }
@@ -17,6 +20,7 @@ namespace Dogtrick.Pages
         protected override async Task OnInitializedAsync()
         {
             ParsedMemberId = Guid.Parse(MemberId);
+            _messageService.SetMemberId(ParsedMemberId);
             MemberEmail = await _userRepository.GetMemberEmail(ParsedMemberId);
         }
 

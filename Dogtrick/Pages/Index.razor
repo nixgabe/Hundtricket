@@ -1,21 +1,32 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Index</PageTitle>
+<hr>
 
-@if (Dogs == null)
-{
-    <p>Loading... </p>
-}
-
-else
-{
-    @foreach (var dog in Dogs)
-    {
-        <p>@dog.Name is @dog.Age years old. Of breed @dog.Breed</p>
-        @foreach (var picture in dog.Pictures)
-        {
-            <p>@picture</p>
-        }
-    }
-}
+<MudGrid>
+    <MudItem xs="12" sm="6" md="4">
+        <MudPaper>
+            <MudTextField T="string" Label="Username" Required="true" @bind-Value="@userInput"></MudTextField>
+            <MudTextField T="string" Label="Message" Required="true" @bind-Value="@messageInput"></MudTextField>
+        </MudPaper>
+        <MudButton Variant="Variant.Filled" @onclick="Send">Send</MudButton>
+    </MudItem>    
+</MudGrid>
+<MudGrid Style=" height:500px">
+    <MudItem xs="12" md="6">
+        <MudPaper Width="100%">
+            <MudList>
+                @foreach (var message in MessagesList)
+                {
+                    
+                    <hr />
+                    <MudListItem Text="@message.MessageText"></MudListItem>                    
+                }
+            </MudList>
+        </MudPaper>
+    </MudItem>
+</MudGrid>

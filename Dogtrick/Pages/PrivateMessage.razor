@@ -1,0 +1,59 @@
+﻿@using MudBlazor
+@inject IDialogService DialogService
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@page "/PrivateMessage/{UserId}"
+
+<h3>PrivateMessage</h3>
+
+<MudGrid>
+    <MudItem xs="12" sm="6" md="4">
+        <MudPaper>
+            <MudTextField T="string" Label="Username" Required="true" @bind-Value="@userInput"></MudTextField>
+            <MudTextField T="string" Label="Message" Required="true" @bind-Value="@messageInput"></MudTextField>
+        </MudPaper>
+        <MudButton Variant="Variant.Filled" @onclick="Send">Send</MudButton>
+    </MudItem>
+</MudGrid>
+<MudGrid Style=" height:500px">
+    <MudItem xs="12" md="6">
+        <MudPaper class="Scrollable" Width="100%" Style="overflow:auto" Height="500px">
+            <MudList>
+                @foreach (var message in PrivateDmMessages)
+                {
+                    @if (message.ToUserId != UserId && message.FromUserId != MemberId)
+                    {
+                        //Content printed to the left...
+                        <p>
+                            <MudChip Class="ReceivingMessage" Style="@($"background:{Colors.Green.Lighten2}")">
+                            @message.MessageText
+                        </MudChip>
+                        </p>
+                    }
+                
+                    if (message.FromUserId == MemberId && message.ToUserId == UserId)
+                    {
+                        //Content printed to the right
+                        <p>
+                        <MudChip Class="SendingMessage" Style="margin-right">
+                            @message.MessageText
+                        </MudChip>         
+                        </p>
+                    }                    
+                }
+            </MudList>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@*<MudPaper Height="400px" Width="100%">
+    <MudContainer Fixed="true">
+        <MudPaper Height="400px" Width="100%" Square="true" Class="mud-theme-primary">
+
+        </MudPaper>
+    </MudContainer>
+</MudPaper>*@
+
