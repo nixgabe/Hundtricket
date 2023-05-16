@@ -3,7 +3,7 @@
 
 <h3>AddDog</h3>
 
-@if(AddDogViewModel == null)
+@if (_addDogOverview.NewDogViewModel == null)
 {
     <p>Loading...</p>
 }
@@ -11,59 +11,59 @@
 else
 {
     <p>Name</p>
-    <InputText @bind-Value="NewDog.Name"></InputText>
+    <InputText @bind-Value="_addDogOverview.NewDog.Name"></InputText>
     <p>Age</p>
-    <InputNumber @bind-Value="NewDog.Age"></InputNumber>
+    <InputNumber @bind-Value="_addDogOverview.NewDog.Age"></InputNumber>
     <p>Gender</p>
-    <select @bind="@NewDog.GenderId">
-        @foreach (var gender in AddDogViewModel.Genders)
+    <select @bind="@_addDogOverview.NewDog.GenderId">
+        @foreach (var gender in _addDogOverview.NewDogViewModel.Genders)
         {
             <option value="@gender.Id">@gender.GenderOption</option>
         }
     </select>
     <p>Breed</p>
-    <select @bind="@NewDog.DogBreedId">
-        @foreach(var breed in AddDogViewModel.Breeds)
+    <select @bind="@_addDogOverview.NewDog.DogBreedId">
+        @foreach (var breed in _addDogOverview.NewDogViewModel.Breeds)
         {
             <option value="@breed.Id">@breed.Breed</option>
         }
     </select>
     <p>Size</p>
-        <select @bind="@NewDog.DogSizeId">
-        @foreach (var size in AddDogViewModel.Sizes)
+    <select @bind="@_addDogOverview.NewDog.DogSizeId">
+        @foreach (var size in _addDogOverview.NewDogViewModel.Sizes)
         {
                 <option value="@size.Id">@size.Size</option>
         }
         </select>
     <p>Energy level</p>
-    <select @bind="@NewDog.DogEnergyLevelId">
-        @foreach (var level in AddDogViewModel.EnergyLevels)
+    <select @bind="@_addDogOverview.NewDog.DogEnergyLevelId">
+        @foreach (var level in _addDogOverview.NewDogViewModel.EnergyLevels)
         {
             <option value="@level.Id">@level.EnergyLevel</option>
         }
     </select>
-    <p>Check if Allergenic <InputCheckbox @bind-Value="NewDog.Allergenic"></InputCheckbox> </p>
+    <p>Check if Allergenic <InputCheckbox @bind-Value="_addDogOverview.NewDog.Allergenic"></InputCheckbox> </p>
 
     <h3>Dog Personality</h3>
-    <p>Works with boys = <InputCheckbox @bind-Value="Personality.WorksWithBoys"></InputCheckbox></p>
-    <p>Works with girls = <InputCheckbox @bind-Value="Personality.WorksWithGirls"></InputCheckbox></p>
-    <p>Average walk <InputNumber @bind-Value="Personality.AverageWalk"></InputNumber></p>
-    <p>Timid = <InputCheckbox @bind-Value="Personality.Timid"></InputCheckbox></p>
-    <p>Confident = <InputCheckbox @bind-Value="Personality.Confident"></InputCheckbox></p>
-    <p>Adaptable = <InputCheckbox @bind-Value="Personality.Adaptable"></InputCheckbox></p>
-    <p>Independent = <InputCheckbox @bind-Value="Personality.Independent"></InputCheckbox></p>
-    <p>Laidback = <InputCheckbox @bind-Value="Personality.LaidBack"></InputCheckbox></p>
+    <p>Works with boys = <InputCheckbox @bind-Value="_addDogOverview.NewDogPersonality.WorksWithBoys"></InputCheckbox></p>
+    <p>Works with girls = <InputCheckbox @bind-Value="_addDogOverview.NewDogPersonality.WorksWithGirls"></InputCheckbox></p>
+    <p>Average walk <InputNumber @bind-Value="_addDogOverview.NewDogPersonality.AverageWalk"></InputNumber></p>
+    <p>Timid = <InputCheckbox @bind-Value="_addDogOverview.NewDogPersonality.Timid"></InputCheckbox></p>
+    <p>Confident = <InputCheckbox @bind-Value="_addDogOverview.NewDogPersonality.Confident"></InputCheckbox></p>
+    <p>Adaptable = <InputCheckbox @bind-Value="_addDogOverview.NewDogPersonality.Adaptable"></InputCheckbox></p>
+    <p>Independent = <InputCheckbox @bind-Value="_addDogOverview.NewDogPersonality.Independent"></InputCheckbox></p>
+    <p>Laidback = <InputCheckbox @bind-Value="_addDogOverview.NewDogPersonality.LaidBack"></InputCheckbox></p>
 
 
     <h3>Dog Preferences</h3>
-    <p>Works with boys = <InputCheckbox @bind-Value="Preferences.WorksWithBoys"></InputCheckbox></p>
-    <p>Works with girls = <InputCheckbox @bind-Value="Preferences.WorksWithGirls"></InputCheckbox></p>
-    <p>Average walk = <InputNumber @bind-Value="Preferences.AverageWalk"></InputNumber> </p>
-    <p>Timid = <InputCheckbox @bind-Value="Preferences.Timid"></InputCheckbox> </p>
-    <p>Confident = <InputCheckbox @bind-Value="Preferences.Confident"></InputCheckbox> </p>
-    <p>Adaptable = <InputCheckbox @bind-Value="Preferences.Adaptable"></InputCheckbox> </p>
-    <p>Independent = <InputCheckbox @bind-Value="Preferences.Independent"></InputCheckbox></p>
-    <p>Laidback = <InputCheckbox @bind-Value="Preferences.LaidBack"></InputCheckbox>  </p>
+    <p>Works with boys = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.WorksWithBoys"></InputCheckbox></p>
+    <p>Works with girls = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.WorksWithGirls"></InputCheckbox></p>
+    <p>Average walk = <InputNumber @bind-Value="_addDogOverview.NewDogPreferences.AverageWalk"></InputNumber> </p>
+    <p>Timid = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.Timid"></InputCheckbox> </p>
+    <p>Confident = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.Confident"></InputCheckbox> </p>
+    <p>Adaptable = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.Adaptable"></InputCheckbox> </p>
+    <p>Independent = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.Independent"></InputCheckbox></p>
+    <p>Laidback = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.LaidBack"></InputCheckbox>  </p>
 
     <button @onclick="()=> SaveDog()">Save dog</button>
 }

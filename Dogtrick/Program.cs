@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
+using Infrastructure.Overviews;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,11 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IUserPreferencesRepository, UserPreferencesRepository>();
 
+builder.Services.AddScoped<IAddDogOverview, AddDogOverview>();
+builder.Services.AddScoped<IDogParkOverview, DogParkOverview>();
+builder.Services.AddScoped<IDogProfileOverview, DogProfileOverview>();
+builder.Services.AddScoped<IEditProfileOverview, EditProfileOverview>();
+builder.Services.AddScoped<IViewUserProfileOverview, ViewUserProfileOverview>();
 
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IMessageService, MessageService>();

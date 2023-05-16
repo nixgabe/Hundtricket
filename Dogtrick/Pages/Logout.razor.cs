@@ -18,10 +18,6 @@ namespace Dogtrick.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
-            //await SignInManager.SignOutAsync();
-
             NavigationManager.NavigateTo("/");
         }
     }

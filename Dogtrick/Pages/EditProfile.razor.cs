@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Infrastructure.Overviews;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Components;
 
@@ -7,9 +8,7 @@ namespace Dogtrick.Pages
     public partial class EditProfile
     {
         [Inject]
-        public IUserRepository _userRepository { get; set; }
-        [Inject]
-        public IUserProfileRepository _userProfileRepository { get; set; }
+        public IEditProfileOverview _editProfileOverview { get; set; }
         [Inject]
         public NavigationManager _navigationManager { get; set; }
 
@@ -17,28 +16,16 @@ namespace Dogtrick.Pages
         public string MemberId { get; set; }
         private Guid ParsedMemberId { get; set; }
 
-        public User User { get; set; }
-        public UserProfile UserProfile { get; set; }
-        public UserPreferences Preferences { get; set; }
-        public UserHobbies Hobbies { get; set; }
-        public List<Gender> Genders { get; set; }
-
-
-
         protected override async Task OnInitializedAsync()
         {
             ParsedMemberId = Guid.Parse(MemberId);
-            User = await _userRepository.GetMemberOnId(ParsedMemberId);
-            UserProfile = await _userProfileRepository.GetUserProfileOnMemberId((Guid)User.UserProfileId);
-            Hobbies = UserProfile.UserHobbies;
-            Genders = await _userRepository.GetGendersList();
+            _editProfileOverview.GatherAllInfo(ParsedMemberId);
         }
 
         public async void SaveChanges()
         {
-            _userRepository.UpdateUser(User);
-            _userProfileRepository.UpdateUserProfile(UserProfile);
-            _navigationManager.NavigateTo($"/MainProfile/{User.Id}");
+            _editProfileOverview.SaveChanges();
+            _navigationManager.NavigateTo($"/MainProfile/{_editProfileOverview.User.Id}");
         }
     }
 }

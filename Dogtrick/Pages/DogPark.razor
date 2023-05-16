@@ -4,7 +4,7 @@
 
 <h3>The Dog Park</h3>
 
-@if(User == null)
+@if(_dogParkOverview.User == null)
 {
     <p>Loading...</p>
 }
@@ -14,20 +14,20 @@ else
 
     <p>Pick a dog to filter on</p>
     <p>Don't worry! After you filter on one of your pups, your own preferences will also be applied!</p>
-    <select @bind="@DogName" style="width:250px;">
+    <select @bind="@_dogParkOverview.DogName" style="width:250px;">
         <option value="null"></option>
-        @foreach (var dog in UserDogFilters)
+        @foreach (var dog in _dogParkOverview.UserDogFilters)
         {
             <option value="@dog.DogName">@dog.DogName</option>
         }
     </select>
     <MudButtonGroup Color="Color.Secondary" Size="Size.Medium" Variant="Variant.Outlined">
-        <MudButton @onclick="() => FilterOnDog()">Filter</MudButton>
+        <MudButton @onclick="() => _dogParkOverview.FilterDog()">Filter</MudButton>
     </MudButtonGroup>
     
 
 
-    @if (FilteredList.Count() == 0)
+    @if (_dogParkOverview.FilteredList.Count() == 0)
     {
         <p>Looks like there's no dogs in the park right now!</p>        
     }
@@ -56,9 +56,9 @@ else
             </div>
         </NextButtonTemplate>
         <ChildContent>
-            @foreach (var dog in FilteredList)
+            @foreach (var dog in _dogParkOverview.FilteredList)
             {
-                <MudCarouselItem Color="@Color.Primary">
+                <MudCarouselItem Style="@($"background:{Colors.Green.Lighten4}")">
                     <MudCard>
                         <center>
                             <MudCardContent>
@@ -74,5 +74,4 @@ else
             }
         </ChildContent>
     </MudCarousel>
-
 }
