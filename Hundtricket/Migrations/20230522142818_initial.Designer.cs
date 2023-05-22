@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(HundtricketContext))]
-    [Migration("20230522121334_initial")]
+    [Migration("20230522142818_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -532,8 +532,8 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("GenderId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("LocationRange")
                         .HasColumnType("int");
@@ -545,6 +545,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GenderId");
 
                     b.ToTable("UserPreferences");
                 });
@@ -673,6 +675,15 @@ namespace Infrastructure.Migrations
                     b.HasOne("Entities.UserDogRelationships", null)
                         .WithMany("UserDogs")
                         .HasForeignKey("UserDogRelationshipsId");
+                });
+
+            modelBuilder.Entity("Entities.UserPreferences", b =>
+                {
+                    b.HasOne("Entities.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId");
+
+                    b.Navigation("Gender");
                 });
 
             modelBuilder.Entity("Entities.UserProfile", b =>

@@ -19,7 +19,7 @@ namespace Dogtrick.Pages
         protected override async Task OnInitializedAsync()
         {
             ParsedMemberId = Guid.Parse(MemberId);
-            _editProfileOverview.GatherAllInfo(ParsedMemberId);
+            await _editProfileOverview.GatherAllInfo(ParsedMemberId);
         }
 
         public async void SaveChanges()

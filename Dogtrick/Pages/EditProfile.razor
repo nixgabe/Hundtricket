@@ -23,12 +23,12 @@ else
     <h3>Profile</h3>
 
     <p>Gender</p>
-@*    <select @bind="@UserProfile.GenderId">
-        @foreach (var gender in Genders)
+    <select @bind="@_editProfileOverview.GenderIdTemp">
+        @foreach (var gender in _editProfileOverview.Genders)
         {
             <option value="@gender.Id">@gender.GenderOption</option>
         }
-    </select>*@
+    </select>
     <p>Sexuality</p>
     <InputText @bind-Value="_editProfileOverview.UserProfile.Sexuality"></InputText>
     <p>Job</p>
@@ -42,10 +42,10 @@ else
     <h3>Preferences</h3>
 
     <p>Gender</p>
-    <select @bind="@_editProfileOverview.UserProfile.UserPreferences.Gender">
+    <select @bind="@_editProfileOverview.PreferenceIdTemp">
         @foreach (var gender in _editProfileOverview.Genders)
         {
-            <option value="@gender.GenderOption">@gender.GenderOption</option>
+            <option value="@gender.Id">@gender.GenderOption</option>
         }
     </select>    
     <p>Range</p>

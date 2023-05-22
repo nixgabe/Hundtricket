@@ -36,7 +36,7 @@ namespace Infrastructure.Repository
             
             var originalProfile = context.UserProfiles.Where(f => f.Id == userProfile.Id).FirstOrDefault();
 
-            originalProfile.Gender = userProfile.Gender;
+            originalProfile.GenderId = userProfile.GenderId;
             originalProfile.Sexuality = userProfile.Sexuality;
             originalProfile.Job = userProfile.Job;
             originalProfile.Location = userProfile.Location;
@@ -44,7 +44,7 @@ namespace Infrastructure.Repository
 
             var originalPreferences = context.UserPreferences.Where(f => f.Id == userProfile.UserPreferencesId).FirstOrDefault();
 
-            originalPreferences.Gender = userProfile.UserPreferences.Gender;
+            originalPreferences.GenderId = userProfile.UserPreferences.GenderId;
             originalPreferences.LocationRange = userProfile.UserPreferences.LocationRange;
             originalPreferences.YoungestAge = userProfile.UserPreferences.YoungestAge;
             originalPreferences.OldestAge = userProfile.UserPreferences.OldestAge;
@@ -79,7 +79,7 @@ namespace Infrastructure.Repository
               .Where(f => f.Id == preferencesId)
               .Select(s => new UserPreferencesViewModel()
               {
-                  Gender = s.Gender,
+                  GenderId = s.GenderId,
                   YoungestAge = s.YoungestAge,
                   OldestAge = s.OldestAge
               })
@@ -106,10 +106,10 @@ namespace Infrastructure.Repository
             .Select(s => new UserPreferencesViewModel()
             {
                 FilterId = s.Id,
-                Gender = s.Gender,
+                GenderId = s.GenderId,
                 YoungestAge = s.YoungestAge,
                 OldestAge = s.OldestAge
-            })
+            })            
             .ToList();
 
             var users = context.Users

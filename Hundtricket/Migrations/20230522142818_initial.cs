@@ -178,21 +178,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserPreferences",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LocationRange = table.Column<int>(type: "int", nullable: true),
-                    YoungestAge = table.Column<int>(type: "int", nullable: true),
-                    OldestAge = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserPreferences", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DogPictures",
                 columns: table => new
                 {
@@ -273,6 +258,26 @@ namespace Infrastructure.Migrations
                         principalTable: "Genders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPreferences",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GenderId = table.Column<int>(type: "int", nullable: true),
+                    LocationRange = table.Column<int>(type: "int", nullable: true),
+                    YoungestAge = table.Column<int>(type: "int", nullable: true),
+                    OldestAge = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPreferences", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPreferences_Genders_GenderId",
+                        column: x => x.GenderId,
+                        principalTable: "Genders",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -451,6 +456,11 @@ namespace Infrastructure.Migrations
                 column: "UserDogRelationshipsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserPreferences_GenderId",
+                table: "UserPreferences",
+                column: "GenderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_GenderId",
                 table: "UserProfiles",
                 column: "GenderId");
@@ -522,13 +532,13 @@ namespace Infrastructure.Migrations
                 name: "UserProfiles");
 
             migrationBuilder.DropTable(
-                name: "Genders");
-
-            migrationBuilder.DropTable(
                 name: "UserHobbies");
 
             migrationBuilder.DropTable(
                 name: "UserPreferences");
+
+            migrationBuilder.DropTable(
+                name: "Genders");
         }
     }
 }
