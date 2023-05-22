@@ -35,6 +35,7 @@ builder.Services.AddSingleton<AuthenticationStateProvider, RevalidatingIdentityA
 builder.Services.AddScoped<IDogRepository, DogRepository>();
 builder.Services.AddScoped<IDogFiltersRepository, DogFiltersRepository>();
 builder.Services.AddScoped<IDogPicturesRepository, DogPicturesRepository>();
+builder.Services.AddScoped<IReportedMessageRepository, ReportedMessageRepository>();
 builder.Services.AddScoped<IUserHobbiesRepository, UserHobbiesRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();

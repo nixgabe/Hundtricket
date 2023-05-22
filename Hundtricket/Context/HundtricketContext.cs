@@ -147,7 +147,10 @@ namespace Hundtricket.Context
             modelBuilder.Entity<Gender>()
                 .HasData(
                 new Gender { Id = 1, GenderOption = "Male"},
-                new Gender { Id = 2, GenderOption = "Female" });            
+                new Gender { Id = 2, GenderOption = "Female" });
+
+            modelBuilder.Entity<ReportedConversation>();
+            modelBuilder.Entity<Message>();
 
         }
 
@@ -166,5 +169,7 @@ namespace Hundtricket.Context
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserDogs> UserDogs { get; set; }
         public DbSet<Gender> Genders { get; set; }        
+        public DbSet<ReportedConversation> ReportedConversation { get; set; }
+        public DbSet<Message> Message { get; set; }
     }
 }

@@ -9,40 +9,55 @@
 
 <h3>PrivateMessage</h3>
 
-<MudGrid>
-    <MudItem xs="12" sm="6" md="4">
-        <MudButton Variant="Variant.Filled" @onclick="ReportConversation">Report conversation</MudButton>
-    </MudItem>
-</MudGrid>
-<MudGrid Style=" height:500px">
-    <MudItem xs="12" md="6">
-        <MudPaper class="Scrollable" Width="100%" Style="overflow:auto" Height="500px">
-            <MudList>
-                @foreach (var message in PrivateDmMessages)
-                {
-                    @if (message.ToUserId != UserId && message.FromUserId != MemberId)
+@if (Reporting == false)
+{
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudButton Variant="Variant.Filled" @onclick="ToggleReporting">Report conversation</MudButton>
+        </MudItem>
+    </MudGrid>
+    <MudGrid Style=" height:500px">
+        <MudItem xs="12" md="6">
+            <MudPaper class="Scrollable" Width="100%" Style="overflow:auto" Height="500px">
+                <MudList>
+                    @foreach (var message in PrivateDmMessages)
                     {
-                        //Content printed to the left...
-                        <p>
-                            <MudChip Class="ReceivingMessage" Style="@($"background:{Colors.Green.Lighten2}")">
-                            @message.MessageText
-                        </MudChip>
-                        </p>
+                        @if (message.ToUserId != UserId && message.FromUserId != MemberId)
+                        {
+                            //Content printed to the left...
+                            <p>
+                                <MudChip Class="ReceivingMessage" Style="@($"background:{Colors.Green.Lighten2}")">
+                                    @message.MessageText
+                                </MudChip>
+                            </p>
+                        }
+
+                        if (message.FromUserId == MemberId && message.ToUserId == UserId)
+                        {
+                            //Content printed to the right
+                            <p>
+                                <MudChip Class="SendingMessage" Style="margin-right">
+                                    @message.MessageText
+                                </MudChip>
+                            </p>
+                        }
                     }
-                
-                    if (message.FromUserId == MemberId && message.ToUserId == UserId)
-                    {
-                        //Content printed to the right
-                        <p>
-                        <MudChip Class="SendingMessage" Style="margin-right">
-                            @message.MessageText
-                        </MudChip>         
-                        </p>
-                    }                    
-                }
-            </MudList>            
+                </MudList>
+            </MudPaper>
+            <MudTextField T="string" Label="Message" Required="true" @bind-Value="@messageInput"></MudTextField>
+            <MudButton Variant="Variant.Filled" @onclick="Send">Send</MudButton>
+        </MudItem>
+    </MudGrid>
+}
+
+else
+{
+    <MudGrid>
+        <MudPaper>
+            <p>Please tell us why you wish to report this conversation, after that you'll be returned to the front page.</p>
+            <InputText @bind-Value="@Reason"></InputText>
+            <MudButton Variant="Variant.Filled" @onclick="ReportConversation">Send</MudButton>
         </MudPaper>
-        <MudTextField T="string" Label="Message" Required="true" @bind-Value="@messageInput"></MudTextField>
-        <MudButton Variant="Variant.Filled" @onclick="Send">Send</MudButton>
-    </MudItem>
-</MudGrid>
+    </MudGrid>
+}
+

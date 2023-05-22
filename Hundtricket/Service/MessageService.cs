@@ -9,7 +9,6 @@ namespace Infrastructure.Service
         public string MemberId { get; set; }
 
         public List<Message> ChatMessages = new List<Message>();
-        //public List<Message> ChatMessages { get; set; }
         public Guid ConversationId {get; set; }
 
         public void SetMemberId(Guid memberId)
@@ -29,24 +28,21 @@ namespace Infrastructure.Service
             return ChatMessages;
         }
 
-        //Can now probably be made easier with the convo id
         public List<Message> GetCurrentConversation(string recipientId, string senderId)
         {
             var list = ChatMessages.Where(f => f.ToUserId == recipientId || f.FromUserId == recipientId).ToList();
-            var test = list.Where(f => f.ToUserId == senderId || f.FromUserId == senderId).ToList();
-
             return list;
         }
 
-        //Only works one way though, should work both
+        
         public void SetConversationId(string recipientId, string senderId)
         {
             var userSide = ChatMessages.Where(f => f.ToUserId == recipientId && f.FromUserId == senderId).Count();
             var senderSide = ChatMessages.Where(f => f.FromUserId == recipientId && f.ToUserId == senderId).Count();
-            var total = userSide + senderSide;
+            var totalMessages = userSide + senderSide;
 
             //if new conversaion
-            if (total == 0)
+            if (totalMessages == 0)
             {
                 ConversationId = Guid.NewGuid();
                 return;

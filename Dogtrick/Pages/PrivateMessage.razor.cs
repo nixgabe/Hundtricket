@@ -27,6 +27,9 @@ namespace Dogtrick.Pages
         public List<Message> AllPrivateDmMessages { get; set; }
         public List<Message> PrivateDmMessages { get; set; } = new List<Message>();
 
+        public string? Reason;
+        public bool Reporting = false;
+
         public string? userInput;
         public string? messageInput;
         private HubConnection hubConnection;
@@ -85,10 +88,15 @@ namespace Dogtrick.Pages
             }
         }
 
+        public void ToggleReporting()
+        {
+            Reporting = true;
+        }
+        
         public void ReportConversation()
         {
             var memberId = Guid.Parse(MemberId);
-            _privateMessageOverview.ReportConversation(PrivateDmMessages, memberId, ParsedUserId);
+            _privateMessageOverview.ReportConversation(PrivateDmMessages, memberId, ParsedUserId, Reason);
         }
     }
 }
