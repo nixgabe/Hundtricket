@@ -10,7 +10,9 @@
 
 else
 {
-    <button @onclick="() => EditProfile()">Edit profile</button> <button @onclick="() => ViewDogs()">View your dogs</button>
+    <MudButton Variant="Variant.Filled" @onclick="() => EditProfile()">Edit profile</MudButton>
+    <MudButton Variant="Variant.Filled" @onclick="() => ViewDogs()">View dogs</MudButton>
+    
 
     <div>
         <p>First Name = @User.FirstName</p>

@@ -64,5 +64,5 @@ else
     <p>Movies <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Movies"></InputCheckbox> </p>
     <p>Gymming <InputCheckbox @bind-Value="_editProfileOverview.UserProfile.UserHobbies.Gymming"></InputCheckbox> </p>
 
-    <button @onclick="() => SaveChanges()">Save Changes</button>
+    <MudButton Variant="Variant.Filled" @onclick="() => SaveChanges()">Save Changes</MudButton>
 }

@@ -65,5 +65,5 @@ else
     <p>Independent = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.Independent"></InputCheckbox></p>
     <p>Laidback = <InputCheckbox @bind-Value="_addDogOverview.NewDogPreferences.LaidBack"></InputCheckbox>  </p>
 
-    <button @onclick="()=> SaveDog()">Save dog</button>
+    <MudButton Variant="Variant.Filled" @onclick="() => SaveDog()">Save changes</MudButton>    
 }

@@ -10,7 +10,7 @@
 else{
     <div hidden="@_dogProfileOverview.EditDog">
         <table>
-            <button @onclick="() => _dogProfileOverview.EditDogButton()">Edit dog</button>
+            <MudButton Variant="Variant.Filled" @onclick="() => _dogProfileOverview.EditDogButton()">Edit dog</MudButton>            
             <thead>                
                 <th>
                     @_dogProfileOverview.Dog.Name
@@ -129,6 +129,6 @@ else{
                 <p>Laid back - <InputCheckbox @bind-Value="@_dogProfileOverview.DogPreferences.Preferences.LaidBack"></InputCheckbox></p>
             </tr>
         </table>
-        <button @onclick="() => _dogProfileOverview.SaveDogChangesButton(ParsedDogId, Pictures)">Save Changes</button>       
+        <MudButton Variant="Variant.Filled" @onclick="() => _dogProfileOverview.SaveDogChangesButton(ParsedDogId, Pictures)">View dogs</MudButton>        
     </div>
 }
