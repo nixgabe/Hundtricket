@@ -35,6 +35,7 @@ builder.Services.AddSingleton<AuthenticationStateProvider, RevalidatingIdentityA
 builder.Services.AddScoped<IDogRepository, DogRepository>();
 builder.Services.AddScoped<IDogFiltersRepository, DogFiltersRepository>();
 builder.Services.AddScoped<IDogPicturesRepository, DogPicturesRepository>();
+builder.Services.AddScoped<IReportedMessageRepository, ReportedMessageRepository>();
 builder.Services.AddScoped<IUserHobbiesRepository, UserHobbiesRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
@@ -44,6 +45,7 @@ builder.Services.AddScoped<IAddDogOverview, AddDogOverview>();
 builder.Services.AddScoped<IDogParkOverview, DogParkOverview>();
 builder.Services.AddScoped<IDogProfileOverview, DogProfileOverview>();
 builder.Services.AddScoped<IEditProfileOverview, EditProfileOverview>();
+builder.Services.AddScoped<IPrivateMessageOverview, PrivateMessageOverview>();
 builder.Services.AddScoped<IViewUserProfileOverview, ViewUserProfileOverview>();
 
 builder.Services.AddScoped<IMemberService, MemberService>();
