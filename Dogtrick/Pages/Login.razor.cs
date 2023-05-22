@@ -26,6 +26,12 @@ namespace Dogtrick.Pages
             if (Email != null && Password != null)
             {
                 var member = await _userRepository.CheckIfMemberExists(Email);
+
+                if(member == null)
+                {
+                    return;
+                }
+
                 if (member.Email == Email && member.Password == Password)
                 {
                     HandleLogin(member);
