@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Hundtricket\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ProfilePics\" />
+  </ItemGroup>
+
 </Project>

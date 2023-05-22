@@ -7,6 +7,8 @@ namespace Infrastructure.Overviews
         public User Profile { get; set; }
         public Dog DogProfile { get; set; }
 
+        public string DogPicture { get; set; }
+
         public Task GatherAllInfo(Guid dogId);
     }
 }
