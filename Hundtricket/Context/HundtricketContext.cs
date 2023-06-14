@@ -12,7 +12,7 @@ namespace Hundtricket.Context
         public HundtricketContext(DbContextOptions<HundtricketContext> options) : base(options)
         {
 
-        }        
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,8 +25,19 @@ namespace Hundtricket.Context
                 options => options.UseSqlServer(@"Data Source=tcp:hundtricket.database.windows.net,1433;Initial Catalog=Hundtricket;User Id=azureuser@hundtricket;Password=Thorloke1; Integrated Security=true; Column Encryption Setting=enabled; Trusted_Connection=False;Encrypt=True"));
         }
 
-        
-        
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Data Source=tcp:hundtricket.database.windows.net,1433;Initial Catalog=Hundtricket;User Id=azureuser@hundtricket;Password=Thorloke1;");
+        //}
+
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    services.AddDbContextFactory<HundtricketContext>(
+        //        options => options.UseSqlServer(@"Data Source=tcp:hundtricket.database.windows.net,1433;Initial Catalog=Hundtricket;User Id=azureuser@hundtricket;Password=Thorloke1;"));
+        //}
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
