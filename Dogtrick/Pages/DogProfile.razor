@@ -10,8 +10,8 @@
 else{
     <div hidden="@_dogProfileOverview.EditDog">
         <table>
-            <button @onclick="() => _dogProfileOverview.EditDogButton()">Edit dog</button>
-            <thead>
+            <MudButton Variant="Variant.Filled" @onclick="() => _dogProfileOverview.EditDogButton()">Edit dog</MudButton>            
+            <thead>                
                 <th>
                     @_dogProfileOverview.Dog.Name
                 </th>
@@ -55,6 +55,18 @@ else{
             <tr>
                 <p>Name - <InputText @bind-Value="@_dogProfileOverview.Dog.Name"> </InputText></p>
                 <p>Age - <InputNumber @bind-Value="@_dogProfileOverview.Dog.Age"> </InputNumber> </p>
+                @*<InputFile OnChange="LoadFiles" multiple />*@
+                @*<MudFileUpload T="IBrowserFile" FilesChanged="SaveChange">
+                    <ButtonTemplate>
+                        <MudButton HtmlTag="label"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.CloudUpload"
+                                   for="@context">
+                            Upload Picture
+                        </MudButton>
+                    </ButtonTemplate>
+                </MudFileUpload>*@
                 <p>
                     Gender -
                     <select @bind="@_dogProfileOverview.Dog.GenderId">
@@ -117,6 +129,6 @@ else{
                 <p>Laid back - <InputCheckbox @bind-Value="@_dogProfileOverview.DogPreferences.Preferences.LaidBack"></InputCheckbox></p>
             </tr>
         </table>
-        <button @onclick="() => _dogProfileOverview.SaveDogChangesButton(ParsedDogId)">Save Changes</button>
+        <MudButton Variant="Variant.Filled" @onclick="() => _dogProfileOverview.SaveDogChangesButton(ParsedDogId, Pictures)">View dogs</MudButton>        
     </div>
 }

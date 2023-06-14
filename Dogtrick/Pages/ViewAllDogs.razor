@@ -16,7 +16,8 @@
             {
 
                 <tr>
-                    <button @onclick="() => DogProfile(dog.Id)"><p>@dog.Name is @dog.Age years old. Of breed @dog.Breed</p></button>
+                    <MudButton Variant="Variant.Filled" @onclick="() => DogProfile(dog.Id)"><p>@dog.Name is @dog.Age years old. Of breed @dog.Breed</p></MudButton>
+                    
                 </tr>
             }
         </tbody>

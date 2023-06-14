@@ -1,9 +1,7 @@
-﻿using Entities;
+﻿
 using Infrastructure.Overviews;
-using Infrastructure.Repository;
-using Infrastructure.Service.ViewModels;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
+
 
 namespace Dogtrick.Pages
 {

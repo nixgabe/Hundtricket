@@ -116,6 +116,38 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Message",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ToUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FromUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MessageText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReportedConversation",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReportedUser = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Reporter = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReportedConversation", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserDogRelationships",
                 columns: table => new
                 {
@@ -143,21 +175,6 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserHobbies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserPreferences",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LocationRange = table.Column<int>(type: "int", nullable: true),
-                    YoungestAge = table.Column<int>(type: "int", nullable: true),
-                    OldestAge = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserPreferences", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -241,6 +258,26 @@ namespace Infrastructure.Migrations
                         principalTable: "Genders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPreferences",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GenderId = table.Column<int>(type: "int", nullable: true),
+                    LocationRange = table.Column<int>(type: "int", nullable: true),
+                    YoungestAge = table.Column<int>(type: "int", nullable: true),
+                    OldestAge = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPreferences", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPreferences_Genders_GenderId",
+                        column: x => x.GenderId,
+                        principalTable: "Genders",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -353,43 +390,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "DogPersonality",
-                columns: new[] { "Id", "Adaptable", "AverageWalk", "Confident", "Independent", "LaidBack", "Timid", "WorksWithBoys", "WorksWithGirls" },
-                values: new object[,]
-                {
-                    { new Guid("05a01d7f-593c-4744-b222-a495726e1ee9"), true, 2m, true, true, true, false, true, true },
-                    { new Guid("a9bd9fe7-6ce7-4286-91a1-58e97b386944"), false, 4m, true, false, true, false, true, true }
-                });
-
-            migrationBuilder.InsertData(
-                table: "DogPictures",
-                columns: new[] { "Id", "DogPicturesId", "DogPicturesRelationshipsId", "Photo" },
-                values: new object[,]
-                {
-                    { new Guid("ce947349-0710-4e93-9526-d0459ef54cd8"), new Guid("2ee94d6a-1f77-49f8-9d90-a689ffb27af8"), null, "Eddies only profile Picture" },
-                    { new Guid("fda3f3e1-6cf1-4cd1-80ca-3f21f8b90c3f"), new Guid("26f31ab2-0db8-4364-9f23-c50c76974f9c"), null, "Thors second profile Picture" },
-                    { new Guid("ffb78ddc-d259-4796-99d6-0e232f41afeb"), new Guid("26f31ab2-0db8-4364-9f23-c50c76974f9c"), null, "Thors first profile Picture" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "DogPicturesRelationships",
-                columns: new[] { "Id", "DogPicturesId" },
-                values: new object[,]
-                {
-                    { new Guid("a87c8bd0-825a-4be4-b4cd-db1826ee410b"), new Guid("2ee94d6a-1f77-49f8-9d90-a689ffb27af8") },
-                    { new Guid("bd7e9b8f-282c-4a5f-be9e-8cd94aa65cc7"), new Guid("26f31ab2-0db8-4364-9f23-c50c76974f9c") }
-                });
-
-            migrationBuilder.InsertData(
-                table: "DogPreferences",
-                columns: new[] { "Id", "Adaptable", "AverageWalk", "Confident", "Independent", "LaidBack", "Timid", "WorksWithBoys", "WorksWithGirls" },
-                values: new object[,]
-                {
-                    { new Guid("28fdcaf0-2c0b-47b3-bff7-911aca09232b"), true, 2m, true, true, true, true, true, true },
-                    { new Guid("75939895-4177-441f-a4c8-06888d8b43ac"), true, 4m, true, true, true, false, true, true }
-                });
-
-            migrationBuilder.InsertData(
                 table: "DogSizes",
                 columns: new[] { "Id", "Size" },
                 values: new object[,]
@@ -409,49 +409,6 @@ namespace Infrastructure.Migrations
                     { 1, "Male" },
                     { 2, "Female" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "UserDogRelationships",
-                columns: new[] { "Id", "UsersDogId" },
-                values: new object[] { new Guid("5cc4785b-acbc-4830-8724-b56b30174ab7"), new Guid("b645ad7f-a3b3-410d-b7cd-ad522634d50c") });
-
-            migrationBuilder.InsertData(
-                table: "UserDogs",
-                columns: new[] { "Id", "DogId", "UserDogRelationshipsId", "UsersDogId" },
-                values: new object[,]
-                {
-                    { new Guid("9dae09d8-d9cf-4fad-ba92-b1e5a8c1f934"), new Guid("b112c433-2235-4ea8-9183-7aaae56b2233"), null, new Guid("5efca5bb-d6b7-4d67-8008-b92971e5fdd1") },
-                    { new Guid("b645ad7f-a3b3-410d-b7cd-ad522634d50c"), new Guid("3686310b-4206-4b54-9fda-48d16b9f8fdd"), null, new Guid("5efca5bb-d6b7-4d67-8008-b92971e5fdd1") }
-                });
-
-            migrationBuilder.InsertData(
-                table: "UserHobbies",
-                columns: new[] { "Id", "Gaming", "Gymming", "Hiking", "Movies", "Music", "Nature", "Swimming" },
-                values: new object[] { new Guid("759fc8b5-7a02-4df0-820d-56eda34e269e"), true, false, false, true, false, false, true });
-
-            migrationBuilder.InsertData(
-                table: "UserPreferences",
-                columns: new[] { "Id", "Gender", "LocationRange", "OldestAge", "YoungestAge" },
-                values: new object[] { new Guid("d3e56832-8530-47d3-9f0a-3ee760b7efb5"), "All", 60, 40, 25 });
-
-            migrationBuilder.InsertData(
-                table: "Dogs",
-                columns: new[] { "DogId", "About", "Age", "Allergenic", "DogBreedId", "DogEnergyLevelId", "DogPersonalityId", "DogPicturesRelationshipsId", "DogPreferencesId", "DogSizeId", "GenderId", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("3686310b-4206-4b54-9fda-48d16b9f8fdd"), null, 1, false, 1, 2, new Guid("a9bd9fe7-6ce7-4286-91a1-58e97b386944"), new Guid("a87c8bd0-825a-4be4-b4cd-db1826ee410b"), new Guid("75939895-4177-441f-a4c8-06888d8b43ac"), 3, 1, "Eddie" },
-                    { new Guid("b112c433-2235-4ea8-9183-7aaae56b2233"), null, 11, false, 2, 1, new Guid("05a01d7f-593c-4744-b222-a495726e1ee9"), new Guid("bd7e9b8f-282c-4a5f-be9e-8cd94aa65cc7"), new Guid("28fdcaf0-2c0b-47b3-bff7-911aca09232b"), 4, 1, "Thor" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "UserProfiles",
-                columns: new[] { "Id", "About", "GenderId", "Job", "Location", "Sexuality", "UserHobbiesId", "UserPreferencesId" },
-                values: new object[] { new Guid("9e0a9556-0725-4c31-a6d8-4cd200b37df1"), "Test Content", 1, "Student", "Bullaren", "Bisexual", new Guid("759fc8b5-7a02-4df0-820d-56eda34e269e"), new Guid("d3e56832-8530-47d3-9f0a-3ee760b7efb5") });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Age", "Email", "FirstName", "IsSignedOn", "LastName", "Password", "UserDogRelationshipsId", "UserProfileId" },
-                values: new object[] { new Guid("25e317d5-e23b-486f-a291-4ad5010bbb95"), 30, "Nixgabriel92@gmail.com", "Gabriel", false, "Nix", "Blank", new Guid("5cc4785b-acbc-4830-8724-b56b30174ab7"), new Guid("9e0a9556-0725-4c31-a6d8-4cd200b37df1") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DogPictures_DogPicturesRelationshipsId",
@@ -499,6 +456,11 @@ namespace Infrastructure.Migrations
                 column: "UserDogRelationshipsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserPreferences_GenderId",
+                table: "UserPreferences",
+                column: "GenderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_GenderId",
                 table: "UserProfiles",
                 column: "GenderId");
@@ -534,6 +496,12 @@ namespace Infrastructure.Migrations
                 name: "Dogs");
 
             migrationBuilder.DropTable(
+                name: "Message");
+
+            migrationBuilder.DropTable(
+                name: "ReportedConversation");
+
+            migrationBuilder.DropTable(
                 name: "UserDogs");
 
             migrationBuilder.DropTable(
@@ -564,13 +532,13 @@ namespace Infrastructure.Migrations
                 name: "UserProfiles");
 
             migrationBuilder.DropTable(
-                name: "Genders");
-
-            migrationBuilder.DropTable(
                 name: "UserHobbies");
 
             migrationBuilder.DropTable(
                 name: "UserPreferences");
+
+            migrationBuilder.DropTable(
+                name: "Genders");
         }
     }
 }

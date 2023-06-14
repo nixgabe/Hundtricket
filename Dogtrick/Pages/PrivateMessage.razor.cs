@@ -17,6 +17,8 @@ namespace Dogtrick.Pages
         public IMessageService _messageService { get; set; }
         [Inject]
         public IPrivateMessageOverview _privateMessageOverview { get; set; }
+        [Inject]
+        public NavigationManager _navigationManager { get; set; }
 
         //Who we send to
         [Parameter]
@@ -97,6 +99,7 @@ namespace Dogtrick.Pages
         {
             var memberId = Guid.Parse(MemberId);
             _privateMessageOverview.ReportConversation(PrivateDmMessages, memberId, ParsedUserId, Reason);
+            //_navigationManager.NavigateTo($"/MainProfile/{UserId}");
         }
     }
 }

@@ -10,8 +10,8 @@ namespace Infrastructure.Overviews
         public AddDogViewModel DogViewModel { get; set; }
         public bool EditDog { get; set; }
 
-        public void GatherAllInfo(Guid dogId);
+        public Task GatherAllInfo(Guid dogId);
         public void EditDogButton();
-        public void SaveDogChangesButton(Guid dogId);
+        public void SaveDogChangesButton(Guid dogId, List<string>pictures);
     }
 }

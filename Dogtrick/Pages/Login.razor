@@ -3,9 +3,12 @@
 <h3>Login</h3>
 
 <div>
-    <p>Enter email <InputText @bind-Value="Email"></InputText>
+    <p>
+        <MudTextField @bind-Value="Email" Label="Email" Variant="Variant.Outlined"></MudTextField>        
     </p>
-    <p>Enter Password <InputText @bind-Value="Password"></InputText></p>
+    <p>
+        <MudTextField @bind-Value="Password" Label="Password" Variant="Variant.Outlined"></MudTextField>
+        </p>
     
-    <button @onclick="() => MemberLogin()">Sign in</button>
+    <MudButton Variant="Variant.Filled" @onclick="() => MemberLogin()">Log in</MudButton>      
 </div>

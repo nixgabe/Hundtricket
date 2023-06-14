@@ -5,6 +5,7 @@
 
         public Guid UserId { get; set; }
         public Guid FilterId { get; set; }
+        public int? GenderId { get; set; }
         public string? Gender { get; set; }
         //public int? LocationRange { get; set; }
         public int? YoungestAge { get; set; }
