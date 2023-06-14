@@ -62,10 +62,10 @@ namespace Dogtrick.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
             [Required]
-            [DataType(DataType.Password)]
+            //[DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
-            [DataType(DataType.Password)]
+            //[DataType(DataType.Password)]
             [Display(Name = "Confirm password")]            
             public string ConfirmPassword { get; set; }
             [Required]
@@ -84,10 +84,12 @@ namespace Dogtrick.Areas.Identity.Pages.Account
             {
                 return;
             }
-            
-            NewMember = await _userRepository.CheckIfMemberExists(Input.Email);
 
-            if (NewMember != null)
+            //NewMember = await _userRepository.CheckIfMemberExists(Input.Email);
+
+            var newMember = await _userRepository.CheckIfMemberExists(Input.Email);
+
+            if (newMember != null)
             {
                 ErrorEmailMessage = false;
                 return;
